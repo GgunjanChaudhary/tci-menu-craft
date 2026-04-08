@@ -1,0 +1,7 @@
+output/*
+!output/.gitkeep
+__pycache__/
+*.pyc
+*.pyo
+.env
+.streamlit/secrets.toml
