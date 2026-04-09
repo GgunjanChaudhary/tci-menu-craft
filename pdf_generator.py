@@ -21,7 +21,7 @@ from reportlab.platypus.flowables import HRFlowable
 from config import (
     COMPANY_NAME, TAGLINE, ABOUT_US, LOGO_PATH, OUTPUT_DIR,
     COLOR_PRIMARY, COLOR_ACCENT, COLOR_TEXT,
-    SHOW_PRICE_ON_PDF, SHOW_TIER_ON_PDF,
+    SHOW_PRICE_ON_PDF, SHOW_TIER_ON_PDF, SECTION_INTROS,
 )
 
 # ── Colors ────────────────────────────────────────────────────────────────────
@@ -69,15 +69,21 @@ def _build_styles():
     add("SectionHeader",
         fontName="Times-Bold", fontSize=15, textColor=PRIMARY,
         alignment=TA_LEFT, spaceBefore=10, spaceAfter=2)
+    add("SectionIntro",
+        fontName="Times-Roman", fontSize=10, textColor=TEXT_COLOR,
+        alignment=TA_JUSTIFY, leading=14, spaceBefore=4, spaceAfter=8)
     add("SubcatHeader",
         fontName="Times-Bold", fontSize=12, textColor=PRIMARY,
-        alignment=TA_LEFT, spaceBefore=8, spaceAfter=2)
+        alignment=TA_LEFT, spaceBefore=10, spaceAfter=4)
     add("DishName",
         fontName="Times-Bold", fontSize=11, textColor=TEXT_COLOR,
         alignment=TA_RIGHT, spaceAfter=1)
     add("DishDesc",
         fontName="Times-Italic", fontSize=9, textColor=GREY,
         alignment=TA_RIGHT, leading=12, spaceAfter=6)
+    add("AddonItem",
+        fontName="Times-Roman", fontSize=11, textColor=TEXT_COLOR,
+        alignment=TA_LEFT, leading=15, spaceAfter=4, leftIndent=12)
 
     return s
 
@@ -141,7 +147,8 @@ def _on_page(canv, doc):
 
 
 # ── Cover page ────────────────────────────────────────────────────────────────
-def _cover(client_name, event_date, venue, event_title, tier_name, tier_info, styles):
+def _cover(client_name, event_date, venue, event_title, tier_name, tier_info,
+           num_guests, styles):
     story = []
 
     # Large centred logo (header is already on this page, so keep logo prominent)
@@ -171,10 +178,12 @@ def _cover(client_name, event_date, venue, event_title, tier_name, tier_info, st
     # Client block — bold + underlined (matching sample style)
     if client_name:
         story.append(Paragraph(f"<u>Hosted by {client_name}</u>", styles["CoverDetail"]))
-    if event_date:
-        story.append(Paragraph(f"<u>Date: {event_date}</u>", styles["CoverDetail"]))
     if venue:
         story.append(Paragraph(f"<u>Venue: {venue}</u>", styles["CoverDetail"]))
+    if event_date:
+        story.append(Paragraph(f"<u>Date: {event_date}</u>", styles["CoverDetail"]))
+    if num_guests:
+        story.append(Paragraph(f"<u>No. of Guests: {num_guests}</u>", styles["CoverDetail"]))
 
     if SHOW_PRICE_ON_PDF and tier_info and tier_name:
         story.append(Spacer(1, 2 * mm))
@@ -200,25 +209,30 @@ def _menu(selections, styles):
     active = [(k, v) for k, v in selections.items() if any(v.values())]
 
     for idx, (section_name, subcategories) in enumerate(active):
+        # Strip any parenthetical suffix from the display name (e.g. "(90 Minutes)")
+        # but keep the original key for intro lookup.
+        display_name = section_name.split(" (")[0].strip()
+
         # Section name: LEFT, maroon, bold, uppercase + full-width gold rule
-        story.append(Paragraph(section_name.upper(), styles["SectionHeader"]))
+        story.append(Paragraph(display_name.upper(), styles["SectionHeader"]))
         story.append(HRFlowable(
             width=CW, thickness=1.5, color=ACCENT,
             spaceBefore=1, spaceAfter=8,
         ))
 
+        # Optional intro paragraph for this section
+        intro = SECTION_INTROS.get(section_name)
+        if intro:
+            story.append(Paragraph(intro, styles["SectionIntro"]))
+
         for subcat_name, dishes in subcategories.items():
             if not dishes:
                 continue
 
-            # Keep subcategory header + its dishes together on the same page
-            block = [
-                Paragraph(subcat_name, styles["SubcatHeader"]),
-                HRFlowable(
-                    width=CW * 0.28, thickness=1, color=ACCENT,
-                    spaceBefore=1, spaceAfter=5,
-                ),
-            ]
+            # Keep subcategory header + its dishes together on the same page.
+            # No decorative rule under the subcategory name — the bold maroon
+            # label provides enough visual separation on its own.
+            block = [Paragraph(subcat_name, styles["SubcatHeader"])]
             for dish in dishes:
                 block.append(Paragraph(dish["name"], styles["DishName"]))
                 if dish.get("description"):
@@ -233,6 +247,22 @@ def _menu(selections, styles):
     return story
 
 
+def _addons(addons, styles):
+    """Render the Add-ons & Special Requests section."""
+    if not addons:
+        return []
+    story = [Spacer(1, 8 * mm)]
+    story.append(Paragraph("ADD-ONS & SPECIAL REQUESTS", styles["SectionHeader"]))
+    story.append(HRFlowable(
+        width=CW, thickness=1.5, color=ACCENT,
+        spaceBefore=1, spaceAfter=8,
+    ))
+    for line in addons:
+        if line.strip():
+            story.append(Paragraph(f"•&nbsp;&nbsp;{line.strip()}", styles["AddonItem"]))
+    return story
+
+
 # ── Entry point ───────────────────────────────────────────────────────────────
 def generate_pdf(
     client_name,
@@ -243,6 +273,8 @@ def generate_pdf(
     tier_info,
     selections,
     event_title="",
+    num_guests=0,
+    addons=None,
     filename=None,
 ):
     """Generate a landscape A4 client menu PDF.
@@ -255,7 +287,9 @@ def generate_pdf(
         tier_name:      str — "Desire", "Wish", or "Walk"
         tier_info:      dict — {"price": 1200, "mg": 100}
         selections:     dict — {section: {subcategory: [{"name":..., "description":...}]}}
-        event_title:    str — e.g. "Wedding Dinner", "Corporate Lunch" (shown on cover)
+        event_title:    str — e.g. "Wedding Extravaganza" (shown on cover)
+        num_guests:     int — number of guests, shown on cover
+        addons:         list[str] — free-form add-on lines, rendered after menu
         filename:       optional output filename
 
     Returns:
@@ -279,8 +313,12 @@ def generate_pdf(
 
     styles = _build_styles()
     story = (
-        _cover(client_name, event_date, venue, event_title, tier_name, tier_info, styles)
+        _cover(
+            client_name, event_date, venue, event_title,
+            tier_name, tier_info, num_guests, styles,
+        )
         + _menu(selections, styles)
+        + _addons(addons or [], styles)
     )
 
     doc.build(story, onFirstPage=_on_page, onLaterPages=_on_page)

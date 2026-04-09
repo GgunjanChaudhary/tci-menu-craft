@@ -1,9 +1,16 @@
 """
-TCI Menu Craft — Streamlit App
-A step-by-step menu builder for The Catering Inc.
+TCI Menu Craft — Streamlit App (Requirements-first flow)
+
+Flow:
+  Step 1 — Intake          : Sales person enters client requirements
+  Step 2 — Suggestions     : Tool recommends top sample menus from the pool
+  Step 3 — Customize       : Sales person tweaks dishes / adds live stations / add-ons
+  Step 4 — Preview & PDF   : Final menu rendered + branded PDF generated
 """
 
 import os
+import base64
+from datetime import date
 import streamlit as st
 from collections import OrderedDict
 
@@ -11,6 +18,7 @@ from config import COMPANY_NAME, LOGO_PATH, COLOR_PRIMARY, COLOR_ACCENT
 from parser import parse_grid
 from menu_loader import load_all, get_dishes
 from pdf_generator import generate_pdf
+from suggester import suggest
 
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -22,60 +30,41 @@ st.set_page_config(
 # ── Custom CSS ───────────────────────────────────────────────────────────────
 st.markdown(f"""
 <style>
-    .stApp {{
-        font-family: 'Segoe UI', sans-serif;
-    }}
-    .step-indicator {{
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        margin-bottom: 20px;
-    }}
+    .stApp {{ font-family: 'Segoe UI', sans-serif; }}
     .step-dot {{
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 14px;
+        width: 36px; height: 36px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: bold; font-size: 14px;
     }}
-    .step-active {{
-        background-color: {COLOR_PRIMARY};
-        color: white;
-    }}
-    .step-done {{
-        background-color: {COLOR_ACCENT};
-        color: white;
-    }}
-    .step-pending {{
-        background-color: #E0E0E0;
-        color: #999;
-    }}
+    .step-active  {{ background-color: {COLOR_PRIMARY}; color: white; }}
+    .step-done    {{ background-color: {COLOR_ACCENT};  color: white; }}
+    .step-pending {{ background-color: #E0E0E0;         color: #999; }}
+
     .section-header {{
-        background-color: {COLOR_PRIMARY};
-        color: white;
-        padding: 10px 16px;
-        border-radius: 6px;
-        margin-top: 16px;
-        margin-bottom: 8px;
-        font-size: 18px;
-        font-weight: bold;
+        background-color: {COLOR_PRIMARY}; color: white;
+        padding: 10px 16px; border-radius: 6px;
+        margin-top: 16px; margin-bottom: 8px;
+        font-size: 18px; font-weight: bold;
     }}
     .subcat-header {{
-        color: {COLOR_PRIMARY};
-        font-weight: bold;
+        color: {COLOR_PRIMARY}; font-weight: bold;
         border-bottom: 2px solid {COLOR_ACCENT};
-        padding-bottom: 2px;
-        margin-top: 12px;
+        padding-bottom: 2px; margin-top: 12px;
     }}
     .summary-card {{
-        background-color: #F5F0E8;
-        padding: 12px;
-        border-radius: 8px;
-        border-left: 4px solid {COLOR_ACCENT};
+        background-color: #F5F0E8; padding: 12px;
+        border-radius: 8px; border-left: 4px solid {COLOR_ACCENT};
         margin-bottom: 8px;
+    }}
+    .suggest-card {{
+        background-color: #FFFFFF; padding: 16px;
+        border: 1px solid #E0E0E0; border-left: 5px solid {COLOR_ACCENT};
+        border-radius: 6px; margin-bottom: 12px;
+    }}
+    .badge {{
+        display: inline-block; padding: 2px 10px;
+        background: #F5F0E8; color: {COLOR_PRIMARY};
+        border-radius: 12px; font-size: 11px; margin-right: 4px;
     }}
 </style>
 """, unsafe_allow_html=True)
@@ -87,15 +76,34 @@ def _init_state():
         "step": 1,
         "grid_data": None,
         "all_items": None,
+        "sample_menus": None,
+
+        # Step 1 — intake
+        "client_name": "",
+        "event_title": "",
+        "event_date": None,       # datetime.date (set via date picker)
+        "venue": "",
+        "occasion": "",
+        "diet": "veg",
+        "meal": "dinner",
+        "num_guests": "200",      # kept as free-text so there are no +/- steppers
+        "is_series": False,
+        "series_notes": "",
+        "special_notes": "",
+
+        # Step 2 — selected suggestion
+        "selected_sample_id": None,
         "menu_type": None,
         "tier": None,
+
+        # Step 3 — customisation
         "selections": {},
         "descriptions": {},
-        "client_name": "",
-        "event_date": "",
-        "venue": "",
-        "event_title": "",
-        "num_guests": "",
+        "addons_text": "",
+
+        # Step 4 — generated PDF state (so it survives Streamlit reruns)
+        "generated_pdf_bytes": None,
+        "generated_pdf_name": None,
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -116,10 +124,18 @@ def load_menu_items():
     return load_all()
 
 
+@st.cache_data
+def load_samples():
+    from suggester import load_sample_menus
+    return load_sample_menus()
+
+
 if st.session_state.grid_data is None:
     st.session_state.grid_data = load_grid()
 if st.session_state.all_items is None:
     st.session_state.all_items = load_menu_items()
+if st.session_state.sample_menus is None:
+    st.session_state.sample_menus = load_samples()
 
 grid = st.session_state.grid_data
 all_items = st.session_state.all_items
@@ -128,18 +144,15 @@ menu_types = grid["menu_types"]
 
 # ── Step indicator ───────────────────────────────────────────────────────────
 def show_step_indicator():
-    labels = ["Menu Type", "Price Tier", "Build Menu", "Preview & Export"]
+    labels = ["Requirements", "Suggested Menu", "Customize", "Preview & PDF"]
     cols = st.columns(len(labels))
     for i, (col, label) in enumerate(zip(cols, labels), 1):
         if i < st.session_state.step:
-            cls = "step-done"
-            icon = "✓"
+            cls, icon = "step-done", "✓"
         elif i == st.session_state.step:
-            cls = "step-active"
-            icon = str(i)
+            cls, icon = "step-active", str(i)
         else:
-            cls = "step-pending"
-            icon = str(i)
+            cls, icon = "step-pending", str(i)
         col.markdown(
             f'<div style="text-align:center">'
             f'<div class="step-dot {cls}" style="margin:auto">{icon}</div>'
@@ -151,118 +164,226 @@ def show_step_indicator():
 
 
 # ── Header ───────────────────────────────────────────────────────────────────
-col_logo, col_title = st.columns([1, 4])
+col_logo, col_title = st.columns([1, 5])
 with col_logo:
     if os.path.exists(LOGO_PATH):
         st.image(LOGO_PATH, width=80)
 with col_title:
     st.markdown(f"## {COMPANY_NAME} — Menu Craft")
-    st.caption("Build a customized banquet menu in minutes")
+    st.caption("Capture client requirements → get a recommended menu → customise → export PDF")
 
 show_step_indicator()
 
 
+# ── Helper to apply a sample menu to session state ───────────────────────────
+# ── Small helpers ────────────────────────────────────────────────────────────
+def format_event_date(d):
+    """Turn a datetime.date into a human-friendly string like '2nd Dec 2026'."""
+    if not d:
+        return ""
+    day = d.day
+    if 11 <= day <= 13:
+        suffix = "th"
+    else:
+        suffix = {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th")
+    return f"{day}{suffix} {d.strftime('%b %Y')}"
+
+
+def parse_guest_count(text, fallback=0):
+    """Extract an integer from free-text guest count input."""
+    if text is None:
+        return fallback
+    try:
+        return int(str(text).strip().replace(",", ""))
+    except (ValueError, AttributeError):
+        return fallback
+
+
+def apply_sample_menu(sample):
+    """Pre-fill st.session_state.selections from a sample menu dict."""
+    st.session_state.selected_sample_id = sample["id"]
+    st.session_state.menu_type = sample["menu_type"]
+    st.session_state.tier = sample["tier"]
+
+    # Clear and re-seed selections
+    st.session_state.selections = {}
+    st.session_state.descriptions = {}
+    for section, subcats in sample.get("selections", {}).items():
+        for subcat, dish_names in subcats.items():
+            key = f"sel_{section}_{subcat}"
+            st.session_state.selections[key] = list(dish_names)
+            # Pre-fill descriptions from CSV defaults
+            dishes = get_dishes(all_items, section, subcat)
+            dish_map = {d["name"]: d["description"] for d in dishes}
+            for name in dish_names:
+                desc_key = f"desc_{key}_{name}"
+                st.session_state.descriptions[desc_key] = dish_map.get(name, "")
+
+
 # ════════════════════════════════════════════════════════════════════════════
-# STEP 1 — Select Menu Type
+# STEP 1 — Requirements Intake
 # ════════════════════════════════════════════════════════════════════════════
 if st.session_state.step == 1:
-    st.subheader("Step 1: Select Menu Type")
+    st.subheader("Step 1: Client Requirements")
+    st.caption("Capture everything the client has told you. The tool will use this to suggest the closest matching menu from the sample pool.")
 
-    menu_type_names = list(menu_types.keys())
-    selected = st.selectbox(
-        "Choose a menu type",
-        menu_type_names,
-        index=menu_type_names.index(st.session_state.menu_type)
-        if st.session_state.menu_type in menu_type_names else 0,
+    # ── Client & event basics ────────────────────────────────────────────
+    st.markdown("**Client & Event**")
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.session_state.client_name = st.text_input(
+            "Client Name", value=st.session_state.client_name,
+            placeholder="e.g. Mr. Mukesh Jain",
+        )
+    with c2:
+        st.session_state.event_title = st.text_input(
+            "Event Title", value=st.session_state.event_title,
+            placeholder="e.g. Wedding Extravaganza",
+        )
+    with c3:
+        st.session_state.occasion = st.text_input(
+            "Occasion", value=st.session_state.occasion,
+            placeholder="e.g. wedding / sangeet / corporate dinner",
+        )
+
+    c4, c5, c6 = st.columns(3)
+    with c4:
+        st.session_state.event_date = st.date_input(
+            "Event Date",
+            value=st.session_state.event_date,
+            format="DD/MM/YYYY",
+        )
+    with c5:
+        st.session_state.venue = st.text_input(
+            "Venue", value=st.session_state.venue,
+            placeholder="e.g. Gurgaon",
+        )
+    with c6:
+        st.session_state.num_guests = st.text_input(
+            "No. of Guests",
+            value=str(st.session_state.num_guests or ""),
+            placeholder="e.g. 400",
+        )
+
+    st.markdown("---")
+
+    # ── Dietary & meal type ─────────────────────────────────────────────
+    st.markdown("**Dietary preference & meal**")
+    c7, c8, c9 = st.columns(3)
+    with c7:
+        diet_options = ["veg", "nonveg", "jain"]
+        diet_labels = {"veg": "Vegetarian", "nonveg": "Non-Vegetarian", "jain": "Jain (no onion/garlic/root)"}
+        st.session_state.diet = st.radio(
+            "Dietary preference", diet_options,
+            format_func=lambda d: diet_labels[d],
+            index=diet_options.index(st.session_state.diet)
+            if st.session_state.diet in diet_options else 0,
+        )
+    with c8:
+        meal_options = ["breakfast", "lunch", "hi-tea", "dinner"]
+        st.session_state.meal = st.radio(
+            "Meal type", meal_options,
+            format_func=lambda m: m.title(),
+            index=meal_options.index(st.session_state.meal)
+            if st.session_state.meal in meal_options else 3,
+        )
+    with c9:
+        st.session_state.is_series = st.checkbox(
+            "Series of events (multi-day)",
+            value=st.session_state.is_series,
+        )
+        if st.session_state.is_series:
+            st.session_state.series_notes = st.text_area(
+                "Series details",
+                value=st.session_state.series_notes,
+                placeholder="e.g. Day 1 — Mehendi (lunch, 200), Day 2 — Sangeet (dinner, 400), Day 3 — Wedding (dinner, 600)",
+                height=100,
+            )
+
+    # ── Special notes ─────────────────────────────────────────────────────
+    st.session_state.special_notes = st.text_area(
+        "Special notes / allergens / preferences (optional)",
+        value=st.session_state.special_notes,
+        placeholder="e.g. host prefers no mushrooms, 30 guests are gluten-free, requested live pasta station",
+        height=80,
     )
 
-    # Show preview of what's included
-    if selected:
-        mt = menu_types[selected]
-        st.markdown("**What's included:**")
-        for section, cats in mt["sections"].items():
-            active = [f"{c} ({v['max']})" for c, v in cats.items() if v["max"] > 0]
-            if active:
-                st.markdown(f"- **{section}:** {', '.join(active)}")
-
-        total = sum(
-            v["max"] for cats in mt["sections"].values() for v in cats.values()
-        )
-        st.info(f"Total items in this menu: **{total}**")
-
-    col1, col2 = st.columns([6, 1])
-    with col2:
-        if st.button("Next →", type="primary", use_container_width=True):
-            st.session_state.menu_type = selected
-            st.session_state.step = 2
-            st.rerun()
+    st.markdown("---")
+    col_a, col_b, col_c = st.columns([1, 5, 1])
+    with col_c:
+        if st.button("Get Suggestions →", type="primary", use_container_width=True):
+            if not st.session_state.client_name.strip():
+                st.error("Please enter the client name before proceeding.")
+            else:
+                st.session_state.step = 2
+                st.rerun()
 
 
 # ════════════════════════════════════════════════════════════════════════════
-# STEP 2 — Select Price Tier
+# STEP 2 — Suggested Menus
 # ════════════════════════════════════════════════════════════════════════════
 elif st.session_state.step == 2:
-    st.subheader("Step 2: Select Price Tier")
+    st.subheader("Step 2: Suggested Menus")
+    st.caption("Top matches from the sample-menu pool. Pick the closest one — you'll be able to tweak it on the next screen.")
 
-    mt = menu_types[st.session_state.menu_type]
-    pricing = mt["pricing"]
-
-    tier_options = list(pricing.keys())
-    tier_labels = {
-        "Desire": "Desire (Premium)",
-        "Wish": "Wish (Standard)",
-        "Walk": "Walk (Economy)",
+    requirements = {
+        "diet": st.session_state.diet,
+        "occasion": st.session_state.occasion,
+        "meal": st.session_state.meal,
+        "num_guests": parse_guest_count(st.session_state.num_guests),
     }
+    suggestions = suggest(requirements, top_n=3)
 
-    selected_tier = st.radio(
-        "Choose a pricing tier",
-        tier_options,
-        format_func=lambda t: tier_labels.get(t, t),
-        index=tier_options.index(st.session_state.tier)
-        if st.session_state.tier in tier_options else 0,
-    )
+    if not suggestions:
+        st.warning("No sample menus found. Add some to data/sample_menus.json.")
+    else:
+        for idx, (menu, score, reasons) in enumerate(suggestions):
+            mt_pricing = menu_types.get(menu["menu_type"], {}).get("pricing", {})
+            tier_info = mt_pricing.get(menu["tier"], {})
+            price = tier_info.get("price", "?")
+            mg = tier_info.get("mg", "?")
 
-    info = pricing[selected_tier]
-    st.markdown(
-        f'<div class="summary-card">'
-        f'<b>₹{info["price"]}</b> per head &nbsp;|&nbsp; '
-        f'Minimum guarantee: <b>{info["mg"]} guests</b>'
-        f'</div>',
-        unsafe_allow_html=True,
-    )
+            badge = "TOP MATCH" if idx == 0 else f"OPTION {idx + 1}"
+            st.markdown(
+                f'<div class="suggest-card">'
+                f'<div style="color:{COLOR_ACCENT};font-weight:bold;font-size:11px;letter-spacing:1px">'
+                f'{badge}  ·  match score {score:.0f}</div>'
+                f'<h3 style="margin:4px 0 6px 0;color:{COLOR_PRIMARY}">{menu["name"]}</h3>'
+                f'<div style="color:#555;margin-bottom:8px">{menu.get("description", "")}</div>'
+                f'<div style="margin-bottom:6px">'
+                + "".join(f'<span class="badge">{r}</span>' for r in reasons)
+                + f'</div>'
+                f'<div style="font-size:12px;color:#666">'
+                f'<b>Base:</b> {menu["menu_type"]} — {menu["tier"]} tier '
+                f'·  ₹{price}/head  ·  MG {mg} guests'
+                f'</div>'
+                f'</div>',
+                unsafe_allow_html=True,
+            )
 
-    # Tier comparison table
-    st.markdown("**All tiers for this menu:**")
-    rows = []
-    for t in tier_options:
-        p = pricing[t]
-        rows.append({
-            "Tier": tier_labels.get(t, t),
-            "Price / Head (₹)": p["price"],
-            "Min. Guests": p["mg"],
-        })
-    st.table(rows)
+            cols = st.columns([6, 2])
+            with cols[1]:
+                if st.button(f"Use this menu", key=f"pick_{menu['id']}", type="primary", use_container_width=True):
+                    apply_sample_menu(menu)
+                    st.session_state.step = 3
+                    st.rerun()
 
-    col1, col2, col3 = st.columns([1, 5, 1])
-    with col1:
+    st.markdown("---")
+    col_a, col_b, col_c = st.columns([1, 5, 1])
+    with col_a:
         if st.button("← Back", use_container_width=True):
             st.session_state.step = 1
             st.rerun()
-    with col3:
-        if st.button("Next →", type="primary", use_container_width=True):
-            st.session_state.tier = selected_tier
-            st.session_state.step = 3
-            st.rerun()
 
 
 # ════════════════════════════════════════════════════════════════════════════
-# STEP 3 — Build Menu
+# STEP 3 — Customize
 # ════════════════════════════════════════════════════════════════════════════
 elif st.session_state.step == 3:
-    st.subheader("Step 3: Build Your Menu")
+    st.subheader("Step 3: Customize the Menu")
     st.caption(
-        f"**{st.session_state.menu_type}** — "
-        f"**{st.session_state.tier}** tier"
+        f"Base: **{st.session_state.menu_type}** — **{st.session_state.tier}** tier. "
+        "Add or remove dishes. Add-ons go at the bottom."
     )
 
     mt = menu_types[st.session_state.menu_type]
@@ -272,7 +393,6 @@ elif st.session_state.step == 3:
         st.markdown("### Menu Summary")
         total_selected = 0
         total_allowed = 0
-
         for section, cats in mt["sections"].items():
             sec_selected = 0
             sec_allowed = 0
@@ -294,13 +414,10 @@ elif st.session_state.step == 3:
                     f'</div>',
                     unsafe_allow_html=True,
                 )
-
         st.markdown("---")
-        st.markdown(
-            f"**Total: {total_selected} / {total_allowed} items**"
-        )
+        st.markdown(f"**Total: {total_selected} / {total_allowed} items**")
 
-    # ── Main content — section by section ────────────────────────────────
+    # ── Section by section ──────────────────────────────────────────────
     for section, cats in mt["sections"].items():
         active_cats = {c: v for c, v in cats.items() if v["max"] > 0}
         if not active_cats:
@@ -316,8 +433,7 @@ elif st.session_state.step == 3:
             dishes = get_dishes(all_items, section, cat)
 
             st.markdown(
-                f'<div class="subcat-header">'
-                f'{cat} — Select up to {max_items}</div>',
+                f'<div class="subcat-header">{cat} — Select up to {max_items}</div>',
                 unsafe_allow_html=True,
             )
 
@@ -330,7 +446,6 @@ elif st.session_state.step == 3:
             dish_names = [d["name"] for d in dishes]
             dish_map = {d["name"]: d["description"] for d in dishes}
 
-            # Pre-select from session state
             current = st.session_state.selections.get(key, [])
             valid_current = [c for c in current if c in dish_names]
 
@@ -342,10 +457,8 @@ elif st.session_state.step == 3:
                 key=f"ms_{key}",
                 label_visibility="collapsed",
             )
-
             st.session_state.selections[key] = selected
 
-            # Editable descriptions
             for dish_name in selected:
                 desc_key = f"desc_{key}_{dish_name}"
                 default_desc = st.session_state.descriptions.get(
@@ -360,6 +473,87 @@ elif st.session_state.step == 3:
                 )
                 st.session_state.descriptions[desc_key] = new_desc
 
+    # ── Optional Extras: categories beyond the base menu type ───────────
+    # Build the union of every (section, category) across all menu types
+    # so the sales person can add things the base menu type does not include.
+    base_section_cats = {
+        (s, c) for s, cats in mt["sections"].items() for c, info in cats.items() if info["max"] > 0
+    }
+    extras_by_section = OrderedDict()
+    for _mt_name, _mt_data in menu_types.items():
+        for s, cats in _mt_data["sections"].items():
+            for c, info in cats.items():
+                if info["max"] <= 0:
+                    continue
+                if (s, c) in base_section_cats:
+                    continue
+                extras_by_section.setdefault(s, set()).add(c)
+
+    if extras_by_section:
+        st.markdown(
+            f'<div class="section-header">Optional Extras (add on top of base menu)</div>',
+            unsafe_allow_html=True,
+        )
+        st.caption(
+            "Anything not part of the chosen base menu type. Pick freely — these are added to the menu without enforcing a cap. "
+            "Use this to bolt on a welcome drink, a live mocktail bar, chaats, a live station, etc."
+        )
+        with st.expander("Show optional extras", expanded=False):
+            for section, cat_set in extras_by_section.items():
+                st.markdown(
+                    f'<div class="subcat-header" style="margin-top:14px">{section}</div>',
+                    unsafe_allow_html=True,
+                )
+                for cat in sorted(cat_set):
+                    dishes = get_dishes(all_items, section, cat)
+                    if not dishes:
+                        continue
+                    key = f"sel_{section}_{cat}"
+                    dish_names = [d["name"] for d in dishes]
+                    dish_map = {d["name"]: d["description"] for d in dishes}
+
+                    current = st.session_state.selections.get(key, [])
+                    valid_current = [c for c in current if c in dish_names]
+
+                    st.markdown(f"**{cat}** _(extra — no cap)_")
+                    selected = st.multiselect(
+                        f"Choose {cat}",
+                        options=dish_names,
+                        default=valid_current,
+                        key=f"ms_extra_{key}",
+                        label_visibility="collapsed",
+                        placeholder=f"Optional — pick any {cat.lower()}",
+                    )
+                    st.session_state.selections[key] = selected
+
+                    for dish_name in selected:
+                        desc_key = f"desc_{key}_{dish_name}"
+                        default_desc = st.session_state.descriptions.get(
+                            desc_key, dish_map.get(dish_name, "")
+                        )
+                        new_desc = st.text_input(
+                            f"Description for {dish_name}",
+                            value=default_desc,
+                            key=f"ti_extra_{desc_key}",
+                            label_visibility="collapsed",
+                            placeholder=f"Description for {dish_name}",
+                        )
+                        st.session_state.descriptions[desc_key] = new_desc
+
+    # ── Add-ons / special requests ──────────────────────────────────────
+    st.markdown(
+        f'<div class="section-header">Add-ons & Special Requests</div>',
+        unsafe_allow_html=True,
+    )
+    st.caption("Anything outside the standard menu — extra live stations, themed counters, allergen subs, custom desserts. This is shown verbatim on the PDF.")
+    st.session_state.addons_text = st.text_area(
+        "Add-ons",
+        value=st.session_state.addons_text,
+        placeholder="e.g.\n• Add Sushi Station for 100 guests (live counter)\n• Extra dessert: Tres Leches\n• Gluten-free thali for 30 guests",
+        height=130,
+        label_visibility="collapsed",
+    )
+
     st.markdown("---")
     col1, col2, col3 = st.columns([1, 5, 1])
     with col1:
@@ -367,7 +561,7 @@ elif st.session_state.step == 3:
             st.session_state.step = 2
             st.rerun()
     with col3:
-        if st.button("Next →", type="primary", use_container_width=True):
+        if st.button("Preview & Export →", type="primary", use_container_width=True):
             st.session_state.step = 4
             st.rerun()
 
@@ -378,39 +572,33 @@ elif st.session_state.step == 3:
 elif st.session_state.step == 4:
     st.subheader("Step 4: Preview & Generate PDF")
 
-    # Client details
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.session_state.client_name = st.text_input(
-            "Client Name", value=st.session_state.client_name
-        )
-    with col2:
-        st.session_state.event_date = st.text_input(
-            "Event Date", value=st.session_state.event_date,
-            placeholder="e.g. 15th March 2026",
-        )
-    with col3:
-        st.session_state.venue = st.text_input(
-            "Venue", value=st.session_state.venue
-        )
-    with col4:
-        st.session_state.event_title = st.text_input(
-            "Event Title (optional)",
-            value=st.session_state.event_title,
-            placeholder="e.g. Wedding Dinner",
-        )
-
-    st.markdown("---")
-
-    # ── Build structured selections for PDF ──────────────────────────────
+    # ── Build structured selections ──────────────────────────────────────
+    # Walk the union of (section, category) across ALL menu types so any
+    # extras the sales person picked beyond the base menu type are also
+    # included in the PDF in their natural section position.
     mt = menu_types[st.session_state.menu_type]
-    pdf_selections = OrderedDict()
 
+    union_sections = OrderedDict()
+    # Start with the base menu type's section/category order so that order is preserved.
     for section, cats in mt["sections"].items():
-        section_dishes = OrderedDict()
+        union_sections[section] = OrderedDict()
         for cat, info in cats.items():
-            if info["max"] == 0:
-                continue
+            if info["max"] > 0:
+                union_sections[section][cat] = True
+    # Then merge in any additional categories from other menu types.
+    for _mt_name, _mt_data in menu_types.items():
+        for section, cats in _mt_data["sections"].items():
+            for cat, info in cats.items():
+                if info["max"] <= 0:
+                    continue
+                union_sections.setdefault(section, OrderedDict())
+                if cat not in union_sections[section]:
+                    union_sections[section][cat] = True
+
+    pdf_selections = OrderedDict()
+    for section, cats in union_sections.items():
+        section_dishes = OrderedDict()
+        for cat in cats:
             key = f"sel_{section}_{cat}"
             selected_names = st.session_state.selections.get(key, [])
             if not selected_names:
@@ -426,9 +614,8 @@ elif st.session_state.step == 4:
 
     # ── Preview ──────────────────────────────────────────────────────────
     st.markdown("### Menu Preview")
-
     if not pdf_selections:
-        st.warning("No items selected. Go back and build your menu.")
+        st.warning("No items selected. Go back and customise the menu.")
     else:
         for section, subcats in pdf_selections.items():
             st.markdown(
@@ -441,62 +628,113 @@ elif st.session_state.step == 4:
                     desc_text = f" — *{dish['description']}*" if dish["description"] else ""
                     st.markdown(f"- **{dish['name']}**{desc_text}")
 
+    if st.session_state.addons_text.strip():
+        st.markdown(
+            f'<div class="section-header">Add-ons & Special Requests</div>',
+            unsafe_allow_html=True,
+        )
+        for line in st.session_state.addons_text.strip().splitlines():
+            if line.strip():
+                st.markdown(f"- {line.strip().lstrip('•').strip()}")
+
     st.markdown("---")
 
-    # ── Generate PDF ─────────────────────────────────────────────────────
     col1, col2, col3, col4 = st.columns([1, 2, 2, 1])
 
     with col1:
         if st.button("← Back", use_container_width=True):
+            # Clear any previously generated PDF so it doesn't stick around
+            st.session_state.generated_pdf_bytes = None
+            st.session_state.generated_pdf_name = None
             st.session_state.step = 3
             st.rerun()
 
     with col3:
-        if st.button("Generate PDF", type="primary", use_container_width=True):
+        generate_label = (
+            "Regenerate PDF" if st.session_state.generated_pdf_bytes else "Generate PDF"
+        )
+        if st.button(generate_label, type="primary", use_container_width=True):
             if not pdf_selections:
                 st.error("No items selected!")
             else:
                 tier_info = mt["pricing"][st.session_state.tier]
+                addon_lines = [
+                    line.strip().lstrip("•").strip()
+                    for line in st.session_state.addons_text.splitlines()
+                    if line.strip()
+                ]
                 filepath = generate_pdf(
                     client_name=st.session_state.client_name,
-                    event_date=st.session_state.event_date,
+                    event_date=format_event_date(st.session_state.event_date),
                     venue=st.session_state.venue,
                     menu_type_name=st.session_state.menu_type,
                     tier_name=st.session_state.tier,
                     tier_info=tier_info,
                     selections=pdf_selections,
                     event_title=st.session_state.event_title,
+                    num_guests=parse_guest_count(st.session_state.num_guests),
+                    addons=addon_lines,
                 )
-                st.success(f"PDF generated: {os.path.basename(filepath)}")
-
                 with open(filepath, "rb") as f:
-                    st.download_button(
-                        label="Download PDF",
-                        data=f.read(),
-                        file_name=os.path.basename(filepath),
-                        mime="application/pdf",
-                        type="primary",
-                    )
+                    st.session_state.generated_pdf_bytes = f.read()
+                st.session_state.generated_pdf_name = os.path.basename(filepath)
+                st.rerun()
 
-    # ── Sidebar info ─────────────────────────────────────────────────────
+    # ── Inline PDF preview (persists across reruns via session_state) ────
+    if st.session_state.generated_pdf_bytes:
+        st.markdown("---")
+        st.markdown("### PDF Preview")
+        st.caption(
+            f"**{st.session_state.generated_pdf_name}** — scroll through to review. "
+            "If it looks good, use the download button below. "
+            "Otherwise click ‘← Back’, tweak the menu, and regenerate."
+        )
+        b64 = base64.b64encode(st.session_state.generated_pdf_bytes).decode("utf-8")
+        pdf_iframe = (
+            f'<iframe src="data:application/pdf;base64,{b64}" '
+            f'width="100%" height="820" '
+            f'style="border:1px solid #E0E0E0;border-radius:6px" '
+            f'type="application/pdf"></iframe>'
+        )
+        st.markdown(pdf_iframe, unsafe_allow_html=True)
+
+        dl_col1, dl_col2, dl_col3 = st.columns([2, 2, 2])
+        with dl_col2:
+            st.download_button(
+                label="⬇  Download PDF",
+                data=st.session_state.generated_pdf_bytes,
+                file_name=st.session_state.generated_pdf_name,
+                mime="application/pdf",
+                type="primary",
+                use_container_width=True,
+            )
+
+    # ── Sidebar ──────────────────────────────────────────────────────────
     with st.sidebar:
         st.markdown("### Event Details")
-        st.write(f"**Menu:** {st.session_state.menu_type}")
-        st.write(f"**Tier:** {st.session_state.tier}")
         if st.session_state.client_name:
             st.write(f"**Client:** {st.session_state.client_name}")
+        if st.session_state.event_title:
+            st.write(f"**Event:** {st.session_state.event_title}")
         if st.session_state.event_date:
-            st.write(f"**Date:** {st.session_state.event_date}")
+            st.write(f"**Date:** {format_event_date(st.session_state.event_date)}")
         if st.session_state.venue:
             st.write(f"**Venue:** {st.session_state.venue}")
+        _g = parse_guest_count(st.session_state.num_guests)
+        if _g:
+            st.write(f"**Guests:** {_g}")
+        st.write(f"**Diet:** {st.session_state.diet}")
+        st.write(f"**Meal:** {st.session_state.meal}")
+        st.markdown("---")
+        st.write(f"**Base menu:** {st.session_state.menu_type}")
+        st.write(f"**Tier:** {st.session_state.tier}")
 
-        # Count
         total = sum(
             len(dishes)
             for subcats in pdf_selections.values()
             for dishes in subcats.values()
         )
-        st.markdown(f"**Total items selected:** {total}")
+        st.markdown(f"**Total dishes:** {total}")
 
         st.markdown("---")
         if st.button("Start Over"):

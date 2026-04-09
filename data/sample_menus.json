@@ -1,0 +1,462 @@
+{
+  "_comment": "Pool of pre-built sample menus. The suggester scores these against client requirements (occasion, diet, meal, guest count) and recommends the closest match. Each sample menu references a menu_type from TCI_Banquet_Grid.xlsx (for pricing + selection limits) and pre-populates dish selections that the sales person can then customize.",
+  "menus": [
+    {
+      "id": "corp_lunch_veg_wish",
+      "name": "Corporate Lunch — Veg",
+      "description": "A clean, business-friendly vegetarian lunch with classics that travel well — built for boardroom lunches and conferences.",
+      "menu_type": "CORPORATE (Veg)",
+      "tier": "Wish",
+      "tags": {
+        "occasion": ["corporate", "conference", "business lunch", "office party"],
+        "diet": "veg",
+        "jain_friendly": false,
+        "meal": ["lunch"],
+        "guest_min": 50,
+        "guest_max": 250,
+        "event_scale": "small"
+      },
+      "selections": {
+        "Starters (90 Minutes)": {
+          "Veg": [
+            "Paneer Tikka",
+            "Hara Bhara Kebab",
+            "Honey Chilly Potato",
+            "Vegetable Spring Roll"
+          ],
+          "Salads": [
+            "Greek Farmer Style Salad",
+            "Kachumber Salad"
+          ]
+        },
+        "Main Course": {
+          "Paneer": ["Paneer Lababdar"],
+          "Veg": ["Dhingri Palak", "Aloo Gobi Ki Sabzi"],
+          "Dal": ["Dal Makhani"],
+          "Starch": ["Jeera Pulao"],
+          "Achaar/ Papad/ Chutney": ["Assorted Papad"],
+          "Yoghurt/ Curd rice": ["Boondi Raita"],
+          "Indian Breads": ["Tandoori Roti", "Butter Naan"],
+          "Desserts": ["Gulab Jamun", "Rice Kheer"]
+        }
+      }
+    },
+    {
+      "id": "corp_dinner_nonveg_desire",
+      "name": "Corporate Dinner — Non-Veg Premium",
+      "description": "A more indulgent corporate dinner with both veg and non-veg starters, signature mains and a curated dessert selection — for client dinners and team celebrations.",
+      "menu_type": "CORPORATE (Non-Veg)",
+      "tier": "Desire",
+      "tags": {
+        "occasion": ["corporate", "client dinner", "team dinner", "office party"],
+        "diet": "nonveg",
+        "jain_friendly": false,
+        "meal": ["dinner"],
+        "guest_min": 50,
+        "guest_max": 250,
+        "event_scale": "small"
+      },
+      "selections": {
+        "Starters (90 Minutes)": {
+          "Non Veg": ["Murgh Malai Kebab", "Fish Tikka Tandoori"],
+          "Veg": ["Pudina Paneer Tikka", "Dahi Ke Kebab"],
+          "Salads": ["Tomato Mozzarella Salad", "Apple Celery and Walnut Salad"]
+        },
+        "Main Course": {
+          "Non Veg": ["Butter Chicken"],
+          "Paneer": ["Paneer Husn-e-Aara"],
+          "Veg": ["Subz Bemishal", "Hing Dhaniya Ka Chatpatta Aloo"],
+          "Dal": ["Dal Maharani"],
+          "Starch": ["Zafrani Tarkari Biryani"],
+          "Achaar/ Papad/ Chutney": ["Mix Pickle"],
+          "Yoghurt/ Curd rice": ["Mix Raita"],
+          "Indian Breads": ["Garlic Naan", "Laccha Paratha"],
+          "Desserts": ["Shahi Tukda", "Chocolate Mousse"]
+        }
+      }
+    },
+    {
+      "id": "wedding_veg_silver",
+      "name": "Sangeet / Mehendi — Veg Silver",
+      "description": "A vegetarian wedding-function menu suitable for sangeet, mehendi or haldi — welcome drinks, a generous starter spread, soups, mains and a dessert counter.",
+      "menu_type": "SOCIAL (VEG) Silver",
+      "tier": "Wish",
+      "tags": {
+        "occasion": ["wedding", "sangeet", "mehendi", "haldi", "engagement", "social"],
+        "diet": "veg",
+        "jain_friendly": false,
+        "meal": ["lunch", "dinner"],
+        "guest_min": 150,
+        "guest_max": 350,
+        "event_scale": "medium"
+      },
+      "selections": {
+        "Break-up": {
+          "Welcome Drink": ["Nariyal Paani Lemonade with Silver Pearls"]
+        },
+        "Starters (90 Minutes)": {
+          "Veg": [
+            "Pudina Paneer Tikka",
+            "Dahi Ke Kebab",
+            "Hara Bhara Kebab",
+            "Subz Ke Galauti Kebab",
+            "Honey Chilly Potato",
+            "Vegetable Spring Roll"
+          ],
+          "Salads": [
+            "Greek Farmer Style Salad",
+            "Kachumber Salad",
+            "Hummus"
+          ],
+          "Soups": ["Tomato Dhaniye Ka Shorba"],
+          "Western Bread": ["Hummus"]
+        },
+        "Main Course": {
+          "Paneer": ["Paneer Lababdar"],
+          "Veg": [
+            "Dhingri Palak",
+            "Subz Bemishal",
+            "Hing Dhaniya Ka Chatpatta Aloo",
+            "Vegetable Jalfrezi"
+          ],
+          "Dal": ["Dal Makhani"],
+          "Starch": ["Vegetable Biryani"],
+          "Achaar/ Papad/ Chutney": ["Assorted Papad"],
+          "Yoghurt/ Curd rice": ["Boondi Raita"],
+          "Indian Breads": [
+            "Tandoori Roti",
+            "Butter Naan",
+            "Laccha Paratha",
+            "Missi Roti"
+          ],
+          "Desserts": ["Gulab Jamun", "Kesari Rasmalai", "Moong Dal Halwa"],
+          "Live Station": ["Live Pasta Station"]
+        }
+      }
+    },
+    {
+      "id": "wedding_nonveg_gold",
+      "name": "Wedding Reception — Non-Veg Gold",
+      "description": "A grand non-vegetarian wedding reception with welcome drinks, chaats, both veg and non-veg starters, premium mains and a live station — built to impress.",
+      "menu_type": "SOCIAL (NON VEG) Gold",
+      "tier": "Wish",
+      "tags": {
+        "occasion": ["wedding", "reception", "anniversary", "social"],
+        "diet": "nonveg",
+        "jain_friendly": false,
+        "meal": ["dinner", "lunch"],
+        "guest_min": 200,
+        "guest_max": 500,
+        "event_scale": "large"
+      },
+      "selections": {
+        "Break-up": {
+          "Welcome Drink": [
+            "Nariyal Paani Lemonade with Silver Pearls",
+            "Kokum Sherbet"
+          ],
+          "Aerated Beverages": ["Coca-Cola"]
+        },
+        "Starters (90 Minutes)": {
+          "Non Veg": [
+            "Murgh Malai Kebab",
+            "Kashmiri Mirch Ka Murgh Tikka",
+            "Fish Tikka Tandoori",
+            "Gosht Malai Seekh Kebab",
+            "Drums of Heaven"
+          ],
+          "Veg": [
+            "Pudina Paneer Tikka",
+            "Dahi Ke Kebab",
+            "Subz Ke Galauti Kebab",
+            "Honey Chilly Potato",
+            "Vegetable Spring Roll"
+          ],
+          "Salads": [
+            "Greek Farmer Style Salad",
+            "Tomato Mozzarella Salad",
+            "Apple Celery and Walnut Salad",
+            "Kachumber Salad",
+            "Hummus"
+          ],
+          "Soups": [
+            "Surkh Tamatar Aur Tulsi Ka Shorba",
+            "Burmese Khowsuey"
+          ],
+          "Western Bread": ["Babaganoush", "Hummus"],
+          "Chaats": [
+            "Paani Poori",
+            "Dilli Ki Khas Dahi Bhalla Aur Papdi Chaat",
+            "Pao Bhaji Station",
+            "Bhopali Bhutte Ki Kees"
+          ]
+        },
+        "Main Course": {
+          "Non Veg": [
+            "Butter Chicken",
+            "Mutton Roganjosh",
+            "Goan Fish Curry"
+          ],
+          "Paneer": ["Paneer Husn-e-Aara"],
+          "Veg": [
+            "Dhingri Palak",
+            "Subz Bemishal",
+            "Hyderabadi Khattey Baingan",
+            "Hing Dhaniya Ka Chatpatta Aloo",
+            "Makai Palak",
+            "Baby Corn and Mushroom Ki Sabzi"
+          ],
+          "Dal": ["Dal Maharani"],
+          "Starch": ["Zafrani Tarkari Biryani", "Jeera Pulao"],
+          "Achaar/ Papad/ Chutney": ["Mix Pickle"],
+          "Yoghurt/ Curd rice": ["Minted Vegetable and Anar Raita"],
+          "Indian Breads": [
+            "Tandoori Roti",
+            "Butter Naan",
+            "Laccha Paratha",
+            "Garlic Naan"
+          ],
+          "Desserts": [
+            "Gulab Jamun",
+            "Kesari Rasmalai",
+            "Shahi Tukda",
+            "Moong Dal Halwa",
+            "Kesari Phirni",
+            "Tiramisu"
+          ],
+          "Desserts Live": ["Jalebi with Rabri"],
+          "Live Station": ["Live Pasta Station", "Tuscan Wood Fired Pizza"]
+        }
+      }
+    },
+    {
+      "id": "wedding_veg_platinum_jain",
+      "name": "Grand Wedding — Veg Platinum (Jain-friendly)",
+      "description": "A luxury vegetarian wedding feast designed to be Jain-friendly — no onion, no garlic, no root vegetables. Welcome bar, elaborate chaats, premium mains and live counters.",
+      "menu_type": "SOCIAL (VEG) Platinum",
+      "tier": "Desire",
+      "tags": {
+        "occasion": ["wedding", "reception", "marwari wedding", "gujarati wedding", "social"],
+        "diet": "veg",
+        "jain_friendly": true,
+        "meal": ["lunch", "dinner"],
+        "guest_min": 300,
+        "guest_max": 1000,
+        "event_scale": "grand"
+      },
+      "notes": [
+        "Jain prep — no onion, no garlic, no root vegetables. Substitute aloo / pyaaz / lehsun preparations on request."
+      ],
+      "selections": {
+        "Break-up": {
+          "Welcome Drink": [
+            "Nariyal Paani Lemonade with Silver Pearls",
+            "Kokum Sherbet"
+          ],
+          "Aerated Beverages": ["Sprite"],
+          "Live Mocktail Bar": ["Virgin Mojito"]
+        },
+        "Starters (90 Minutes)": {
+          "Veg": [
+            "Pudina Paneer Tikka",
+            "Dahi Ke Kebab",
+            "Hara Bhara Kebab",
+            "Subz Ke Galauti Kebab",
+            "Bhuttey Ke Kebab",
+            "Tandoori Vilayti Chat",
+            "Sichuan Chilly Paneer",
+            "Vegetable Tempura"
+          ],
+          "Salads": [
+            "Greek Farmer Style Salad",
+            "Tomato Mozzarella Salad",
+            "Three Beans Salad",
+            "Broccoli and Corn Salad",
+            "Hummus"
+          ],
+          "Soups": [
+            "Surkh Tamatar Aur Tulsi Ka Shorba",
+            "Cream of Broccoli"
+          ],
+          "Western Bread": ["Hummus", "Babaganoush"],
+          "Chaats": [
+            "Paani Poori",
+            "Dilli Ki Khas Dahi Bhalla Aur Papdi Chaat",
+            "Bhopali Bhutte Ki Kees",
+            "Benarasi Tamatar Ki Chaat",
+            "Dry Fruit Chaat",
+            "Moong Dal Ka Cheela"
+          ]
+        },
+        "Main Course": {
+          "Paneer": ["Paneer Husn-e-Aara", "Paneer Kali Mirch"],
+          "Veg": [
+            "Dhingri Palak",
+            "Subz Bemishal",
+            "Hyderabadi Khattey Baingan",
+            "Makai Palak",
+            "Baby Corn and Mushroom Ki Sabzi",
+            "Vegetable Nargishi Kofta",
+            "Grilled Exotic Vegetables",
+            "Green Thai Vegetable Curry"
+          ],
+          "Dal": ["Dal Maharani"],
+          "Starch": ["Zafrani Tarkari Biryani", "Kashmiri Pulao"],
+          "Achaar/ Papad/ Chutney": ["Mix Pickle"],
+          "Yoghurt/ Curd rice": ["Minted Vegetable and Anar Raita", "Mix Raita"],
+          "Indian Breads": [
+            "Tandoori Roti",
+            "Butter Naan",
+            "Laccha Paratha",
+            "Garlic Naan",
+            "Methi Paratha",
+            "Missi Roti"
+          ],
+          "Desserts": [
+            "Gulab Jamun",
+            "Kesari Rasmalai",
+            "Shahi Tukda",
+            "Moong Dal Halwa",
+            "Kesari Phirni",
+            "Tiramisu",
+            "Blueberry Panna Cotta",
+            "Strawberry Cheesecake"
+          ],
+          "Desserts Live": ["Jalebi with Rabri", "Malpua with Rabdi"],
+          "Live Station": [
+            "Tuscan Wood Fired Pizza",
+            "Live Pasta Station",
+            "Crepe Station"
+          ]
+        }
+      }
+    },
+    {
+      "id": "wedding_nonveg_platinum",
+      "name": "Grand Wedding — Non-Veg Platinum",
+      "description": "An ultra-luxury non-vegetarian wedding extravaganza — welcome bar, elaborate chaats, multiple live counters and a generous dessert spread for 500+ guests.",
+      "menu_type": "SOCIAL (NON VEG) Platinum",
+      "tier": "Desire",
+      "tags": {
+        "occasion": ["wedding", "reception", "destination wedding", "anniversary", "social"],
+        "diet": "nonveg",
+        "jain_friendly": false,
+        "meal": ["lunch", "dinner"],
+        "guest_min": 400,
+        "guest_max": 1200,
+        "event_scale": "grand"
+      },
+      "selections": {
+        "Break-up": {
+          "Welcome Drink": [
+            "Nariyal Paani Lemonade with Silver Pearls",
+            "Kokum Sherbet"
+          ],
+          "Aerated Beverages": ["Coca-Cola"],
+          "Live Mocktail Bar": ["Virgin Mojito"]
+        },
+        "Starters (90 Minutes)": {
+          "Non Veg": [
+            "Murgh Malai Kebab",
+            "Murgh Ka Barra Kebab",
+            "Kashmiri Mirch Ka Murgh Tikka",
+            "Fish Tikka Tandoori",
+            "Gosht Malai Seekh Kebab",
+            "Lagan Ki Boti",
+            "Drums of Heaven",
+            "Goan Crab Cakes"
+          ],
+          "Veg": [
+            "Pudina Paneer Tikka",
+            "Dahi Ke Kebab",
+            "Subz Ke Galauti Kebab",
+            "Tandoori Vilayti Chat",
+            "Bhuttey Ke Kebab",
+            "Sichuan Chilly Paneer",
+            "Vegetable Spring Roll",
+            "Honey Chilly Potato"
+          ],
+          "Salads": [
+            "Greek Farmer Style Salad",
+            "Tomato Mozzarella Salad",
+            "Apple Celery and Walnut Salad",
+            "Thai Chicken and Glass Noodle Salad",
+            "Kachumber Salad",
+            "Hummus",
+            "Babaganoush"
+          ],
+          "Soups": [
+            "Surkh Tamatar Aur Tulsi Ka Shorba",
+            "Murgh Aur Sabziyon Ka Shorba"
+          ],
+          "Western Bread": ["Hummus", "Babaganoush"],
+          "Chaats": [
+            "Paani Poori",
+            "Dilli Ki Khas Dahi Bhalla Aur Papdi Chaat",
+            "Pao Bhaji Station",
+            "Bhopali Bhutte Ki Kees",
+            "Benarasi Tamatar Ki Chaat",
+            "Dry Fruit Chaat"
+          ]
+        },
+        "Main Course": {
+          "Non Veg": [
+            "Butter Chicken",
+            "Mutton Roganjosh",
+            "Goan Fish Curry",
+            "Murgh Kali Mirch"
+          ],
+          "Paneer": ["Paneer Husn-e-Aara", "Paneer Kali Mirch"],
+          "Veg": [
+            "Dhingri Palak",
+            "Subz Bemishal",
+            "Hyderabadi Khattey Baingan",
+            "Makai Palak",
+            "Baby Corn and Mushroom Ki Sabzi",
+            "Vegetable Nargishi Kofta",
+            "Grilled Exotic Vegetables",
+            "Green Thai Vegetable Curry",
+            "Hing Dhaniya Ka Chatpatta Aloo",
+            "Vegetable Jalfrezi"
+          ],
+          "Dal": ["Dal Maharani"],
+          "Starch": [
+            "Zafrani Tarkari Biryani",
+            "Kashmiri Pulao",
+            "Vegetable Hakka Noodles"
+          ],
+          "Achaar/ Papad/ Chutney": ["Mix Pickle"],
+          "Yoghurt/ Curd rice": ["Minted Vegetable and Anar Raita", "Mix Raita"],
+          "Indian Breads": [
+            "Tandoori Roti",
+            "Butter Naan",
+            "Laccha Paratha",
+            "Garlic Naan",
+            "Methi Paratha",
+            "Missi Roti",
+            "Cheese Kulcha",
+            "Pudina Paratha"
+          ],
+          "Desserts": [
+            "Gulab Jamun",
+            "Kesari Rasmalai",
+            "Shahi Tukda",
+            "Moong Dal Halwa",
+            "Kesari Phirni",
+            "Tiramisu",
+            "Chocolate Mousse",
+            "Blueberry Panna Cotta",
+            "Strawberry Cheesecake",
+            "Warm Chocolate Brownie"
+          ],
+          "Desserts Live": ["Jalebi with Rabri", "Malpua with Rabdi"],
+          "Live Station": [
+            "Tuscan Wood Fired Pizza",
+            "Live Pasta Station",
+            "Sushi Station"
+          ]
+        }
+      }
+    }
+  ]
+}

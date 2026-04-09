@@ -11,6 +11,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOGO_PATH = os.path.join(BASE_DIR, "assets", "logo.png")
 EXCEL_PATH = os.path.join(BASE_DIR, "data", "TCI_Banquet_Grid.xlsx")
 MENU_ITEMS_DIR = os.path.join(BASE_DIR, "data", "menu_items")
+SAMPLE_MENUS_PATH = os.path.join(BASE_DIR, "data", "sample_menus.json")
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 
 # ── Company Info ─────────────────────────────────────────────────────────────
@@ -38,6 +39,30 @@ ABOUT_US = (
 # ── PDF Settings ─────────────────────────────────────────────────────────────
 SHOW_PRICE_ON_PDF = False
 SHOW_TIER_ON_PDF = False
+
+# Section intro paragraphs (printed below each section header on the menu pages,
+# matching the style of the sample Word menus). Sections not listed here render
+# without an intro paragraph.
+SECTION_INTROS = {
+    "Break-up": (
+        "Good drinks not only jazz up and prepare your guests for the food to "
+        "come, they also brighten the mood and add to the zing. If served at "
+        "correct temperature, they satiate the thirst and cleanse the palette "
+        "for the gastronomical journey to follow."
+    ),
+    "Starters (90 Minutes)": (
+        "Starters are the prelude to the meal — bite-sized creations crafted "
+        "to tease the palate and set the tone for the indulgence to follow. "
+        "From classic kebabs to contemporary global bites, each plate is "
+        "designed to leave your guests craving for more."
+    ),
+    "Main Course": (
+        "The heart of any celebration — our main course is a curated journey "
+        "through robust flavors, slow-cooked gravies, fragrant rice and "
+        "freshly baked breads. Every dish is plated with care and served at "
+        "the right temperature to honour the occasion."
+    ),
+}
 
 # Brand colors
 COLOR_PRIMARY = "#6B2737"    # deep maroon
