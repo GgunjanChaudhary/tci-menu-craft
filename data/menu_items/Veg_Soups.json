@@ -1,0 +1,152 @@
+{
+  "category": "Vegetarian Soup",
+  "cuisines": [
+    {
+      "name": "Indian",
+      "dishes": [
+        {
+          "name": "Tomato dhaniye ka shorba",
+          "short_description": "Tomato coriander soup",
+          "premium_description": "A light and refreshing Indian broth made with ripe tomatoes, fresh coriander, and subtle spices.",
+          "tags": ["vegetarian","soup","indian"]
+        },
+        {
+          "name": "Tamatar gajar aur dhaniya ka shorba",
+          "short_description": "Tomato carrot soup",
+          "premium_description": "A wholesome soup combining tomatoes, carrots, and coriander, delicately spiced for a comforting taste.",
+          "tags": ["vegetarian","soup","indian"]
+        },
+        {
+          "name": "Subz badam ka shorba",
+          "short_description": "Vegetable almond soup",
+          "premium_description": "A rich and creamy soup made with mixed vegetables and almonds, offering a smooth texture and nutty flavor.",
+          "tags": ["vegetarian","soup","indian"]
+        },
+        {
+          "name": "Khumb aur nimbu ka shorba",
+          "short_description": "Mushroom lemon soup",
+          "premium_description": "A delicate mushroom broth enhanced with a hint of lemon for a refreshing finish.",
+          "tags": ["vegetarian","soup","indian"]
+        },
+        {
+          "name": "Rasam",
+          "short_description": "Spiced tamarind soup",
+          "premium_description": "A traditional South Indian soup made with tamarind, spices, and herbs, known for its tangy and aromatic flavor.",
+          "tags": ["vegetarian","soup","indian"]
+        }
+      ]
+    },
+    {
+      "name": "Continental",
+      "dishes": [
+        {
+          "name": "Cream of mushroom",
+          "short_description": "Mushroom soup",
+          "premium_description": "A rich and velvety soup made with fresh mushrooms and cream, delivering a smooth and earthy flavor.",
+          "tags": ["vegetarian","soup","creamy"]
+        },
+        {
+          "name": "Cream of broccoli",
+          "short_description": "Broccoli soup",
+          "premium_description": "A creamy soup prepared with fresh broccoli, blended to a smooth and comforting consistency.",
+          "tags": ["vegetarian","soup","creamy"]
+        },
+        {
+          "name": "Green pea thyme soup",
+          "short_description": "Pea soup",
+          "premium_description": "A vibrant soup made with green peas and infused with thyme for a subtle herbal aroma.",
+          "tags": ["vegetarian","soup"]
+        },
+        {
+          "name": "Minestrone with basil pesto",
+          "short_description": "Minestrone soup",
+          "premium_description": "A classic Italian vegetable soup enriched with basil pesto and herbs.",
+          "tags": ["vegetarian","soup"]
+        },
+        {
+          "name": "Cream of asparagus",
+          "short_description": "Asparagus soup",
+          "premium_description": "A creamy and delicate soup made with fresh asparagus, offering a refined taste.",
+          "tags": ["vegetarian","soup","creamy"]
+        },
+        {
+          "name": "Roasted pumpkin volute",
+          "short_description": "Pumpkin soup",
+          "premium_description": "A smooth roasted pumpkin soup with a rich texture and subtle sweetness.",
+          "tags": ["vegetarian","soup"]
+        },
+        {
+          "name": "Roasted tomato basil",
+          "short_description": "Tomato basil soup",
+          "premium_description": "Roasted tomatoes blended with fresh basil to create a rich and aromatic soup.",
+          "tags": ["vegetarian","soup"]
+        }
+      ]
+    },
+    {
+      "name": "Oriental",
+      "dishes": [
+        {
+          "name": "Hot and sour soup",
+          "short_description": "Spicy sour soup",
+          "premium_description": "A classic Indo-Chinese soup balancing spicy and tangy flavors with vegetables.",
+          "tags": ["vegetarian","soup","spicy"]
+        },
+        {
+          "name": "Sweet corn soup",
+          "short_description": "Corn soup",
+          "premium_description": "A mildly sweet and comforting soup made with sweet corn and vegetables.",
+          "tags": ["vegetarian","soup"]
+        },
+        {
+          "name": "Man chow soup",
+          "short_description": "Manchow soup",
+          "premium_description": "A flavorful soup with vegetables and spices, topped with crispy noodles.",
+          "tags": ["vegetarian","soup","spicy"]
+        },
+        {
+          "name": "Vegetable clear soup",
+          "short_description": "Clear veg soup",
+          "premium_description": "A light broth with fresh vegetables, offering a clean and delicate flavor.",
+          "tags": ["vegetarian","soup"]
+        },
+        {
+          "name": "Tom yum soup",
+          "short_description": "Thai soup",
+          "premium_description": "A Thai-style soup with a tangy and aromatic broth infused with herbs and spices.",
+          "tags": ["vegetarian","soup","spicy"]
+        },
+        {
+          "name": "Lemon coriander soup",
+          "short_description": "Lemon soup",
+          "premium_description": "A refreshing soup flavored with lemon and coriander, offering a light and zesty taste.",
+          "tags": ["vegetarian","soup"]
+        },
+        {
+          "name": "Lung fung soup",
+          "short_description": "Mixed soup",
+          "premium_description": "A traditional Chinese-style soup with a blend of vegetables in a savory broth.",
+          "tags": ["vegetarian","soup"]
+        },
+        {
+          "name": "Vegetable noodles soup",
+          "short_description": "Noodle soup",
+          "premium_description": "A comforting soup with vegetables and noodles in a flavorful broth.",
+          "tags": ["vegetarian","soup"]
+        },
+        {
+          "name": "Talumine soup",
+          "short_description": "Talumein soup",
+          "premium_description": "A thick and hearty soup with vegetables and noodles in a rich broth.",
+          "tags": ["vegetarian","soup"]
+        },
+        {
+          "name": "Vegetable rainbow soup",
+          "short_description": "Rainbow soup",
+          "premium_description": "A colorful soup with assorted vegetables, offering a vibrant and nourishing experience.",
+          "tags": ["vegetarian","soup","healthy"]
+        }
+      ]
+    }
+  ]
+}

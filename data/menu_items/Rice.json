@@ -1,0 +1,94 @@
+{
+  "category": "Rice",
+  "cuisines": [
+    {
+      "name": "Indian",
+      "dishes": [
+        {
+          "name": "Subz ki tahire",
+          "short_description": "Vegetable rice",
+          "premium_description": "Fragrant basmati rice cooked with seasonal vegetables and mild spices.",
+          "tags": ["rice","vegetarian","indian"]
+        },
+        {
+          "name": "Jeera pulao",
+          "short_description": "Cumin rice",
+          "premium_description": "Aromatic basmati rice tempered with roasted cumin seeds.",
+          "tags": ["rice","vegetarian","indian"]
+        },
+        {
+          "name": "Vegetable biryani",
+          "short_description": "Veg biryani",
+          "premium_description": "Layered basmati rice cooked with vegetables, herbs, and spices for a rich flavor.",
+          "tags": ["rice","vegetarian","indian"]
+        },
+        {
+          "name": "Kashmiri pulao",
+          "short_description": "Sweet pulao",
+          "premium_description": "Rice cooked with dry fruits, nuts, and mild spices for a sweet and aromatic taste.",
+          "tags": ["rice","vegetarian","indian"]
+        },
+        {
+          "name": "Kesari pulao",
+          "short_description": "Saffron rice",
+          "premium_description": "Rice infused with saffron, offering a rich aroma and vibrant color.",
+          "tags": ["rice","vegetarian","indian"]
+        },
+        {
+          "name": "Motia pulao",
+          "short_description": "Pearl pulao",
+          "premium_description": "A delicately flavored pulao with a rich presentation and subtle spices.",
+          "tags": ["rice","vegetarian","indian"]
+        },
+        {
+          "name": "Subz pulao",
+          "short_description": "Vegetable pulao",
+          "premium_description": "A simple yet flavorful pulao with mixed vegetables and spices.",
+          "tags": ["rice","vegetarian","indian"]
+        },
+        {
+          "name": "Tomato rice",
+          "short_description": "Tomato rice",
+          "premium_description": "Rice cooked with tangy tomatoes and aromatic spices.",
+          "tags": ["rice","vegetarian","indian"]
+        },
+        {
+          "name": "Khumb ka pulao",
+          "short_description": "Mushroom rice",
+          "premium_description": "Basmati rice cooked with mushrooms and subtle spices.",
+          "tags": ["rice","vegetarian","indian"]
+        },
+        {
+          "name": "Pyaz aur jeere ka pulao",
+          "short_description": "Onion cumin rice",
+          "premium_description": "Rice cooked with caramelized onions and cumin for a rich flavor.",
+          "tags": ["rice","vegetarian","indian"]
+        },
+        {
+          "name": "Basmati rice with cumin and onion",
+          "short_description": "Cumin onion rice",
+          "premium_description": "Fragrant basmati rice with cumin seeds and sautéed onions.",
+          "tags": ["rice","vegetarian","indian"]
+        },
+        {
+          "name": "Aloo aur methi ka pulao",
+          "short_description": "Potato fenugreek rice",
+          "premium_description": "Rice cooked with potatoes and fenugreek leaves for a unique flavor.",
+          "tags": ["rice","vegetarian","indian"]
+        },
+        {
+          "name": "Coconut rice",
+          "short_description": "Coconut rice",
+          "premium_description": "Rice cooked with coconut, offering a subtle sweetness and aroma.",
+          "tags": ["rice","vegetarian","indian"]
+        },
+        {
+          "name": "Lemon rice",
+          "short_description": "Lemon rice",
+          "premium_description": "Tangy rice flavored with lemon juice and mild spices.",
+          "tags": ["rice","vegetarian","indian"]
+        }
+      ]
+    }
+  ]
+}

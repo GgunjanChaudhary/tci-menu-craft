@@ -1,0 +1,101 @@
+{
+  "category": "Non Vegetarian Starters",
+  "cuisines": [
+    {
+      "name": "Indian Fish",
+      "dishes": [
+        {"name":"Fish tikka tandoori","short_description":"Tandoori fish","premium_description":"Fresh fish marinated in aromatic spices and grilled in a traditional tandoor for a smoky flavor.","tags":["non-vegetarian","fish","starter"]},
+        {"name":"Doodhiya tandoori machli","short_description":"Creamy tandoori fish","premium_description":"Fish marinated in a creamy spiced mixture and roasted in a tandoor.","tags":["non-vegetarian","fish","starter"]},
+        {"name":"Sarsonwali tandoori machli","short_description":"Mustard fish","premium_description":"Fish marinated in mustard-based spices and grilled to perfection.","tags":["non-vegetarian","fish","starter"]}
+      ]
+    },
+    {
+      "name": "Indian Lamb",
+      "dishes": [
+        {"name":"Boti aur red wine ka tandoori tikka","short_description":"Lamb tikka","premium_description":"Tender lamb cubes marinated with spices and red wine, grilled in a tandoor.","tags":["non-vegetarian","lamb","starter"]},
+        {"name":"Vilayati chop","short_description":"Lamb chops","premium_description":"Juicy lamb chops marinated and grilled with aromatic spices.","tags":["non-vegetarian","lamb","starter"]},
+        {"name":"Gosht malai seekh kebab","short_description":"Seekh kebab","premium_description":"Minced lamb blended with cream and spices, shaped on skewers and grilled.","tags":["non-vegetarian","lamb","starter"]},
+        {"name":"Lagan ki boti","short_description":"Lamb boti","premium_description":"Succulent lamb pieces cooked with rich spices in traditional style.","tags":["non-vegetarian","lamb","starter"]}
+      ]
+    },
+    {
+      "name": "Indian Chicken",
+      "dishes": [
+        {"name":"Kashmiri mirch ka murgh tikka","short_description":"Chicken tikka","premium_description":"Chicken marinated in Kashmiri chili spices and grilled in a tandoor.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Murgh ka barra kebab","short_description":"Chicken barra","premium_description":"Juicy chicken pieces marinated with spices and roasted in a tandoor.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Murgh malai kebab","short_description":"Creamy chicken kebab","premium_description":"Chicken marinated in cream and mild spices, grilled to a soft texture.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Murgh –e- firdaus","short_description":"Spiced chicken","premium_description":"Flavorful chicken prepared with rich spices and cooked to perfection.","tags":["non-vegetarian","chicken","starter"]}
+      ]
+    },
+    {
+      "name": "Oriental Fish",
+      "dishes": [
+        {"name":"Tempura fish","short_description":"Tempura fish","premium_description":"Fish coated in light tempura batter and fried until crisp.","tags":["non-vegetarian","fish","starter"]},
+        {"name":"Thai fish cake","short_description":"Fish cake","premium_description":"Thai-style fish cakes infused with herbs and spices.","tags":["non-vegetarian","fish","starter"]},
+        {"name":"Salt and pepper fish","short_description":"Salt pepper fish","premium_description":"Fish tossed with salt, pepper, and spices for a crisp finish.","tags":["non-vegetarian","fish","starter"]},
+        {"name":"Sichuan fish with bell pepper","short_description":"Spicy fish","premium_description":"Fish cooked in Sichuan sauce with bell peppers and chili.","tags":["non-vegetarian","fish","starter","spicy"]},
+        {"name":"Chilli fish","short_description":"Chili fish","premium_description":"Fish tossed in a spicy chili garlic sauce.","tags":["non-vegetarian","fish","starter","spicy"]}
+      ]
+    },
+    {
+      "name": "Oriental Seafood",
+      "dishes": [
+        {"name":"Sichuan prawn","short_description":"Spicy prawns","premium_description":"Prawns cooked in bold Sichuan chili sauce.","tags":["non-vegetarian","seafood","starter","spicy"]},
+        {"name":"Prawn chilli garlic","short_description":"Garlic prawns","premium_description":"Prawns sautéed with garlic and chili sauce.","tags":["non-vegetarian","seafood","starter"]},
+        {"name":"Salt and pepper prawn","short_description":"Salt pepper prawns","premium_description":"Prawns tossed with salt, pepper, and spices.","tags":["non-vegetarian","seafood","starter"]},
+        {"name":"Golden fried prawn","short_description":"Fried prawns","premium_description":"Crispy fried prawns served golden brown.","tags":["non-vegetarian","seafood","starter","fried"]}
+      ]
+    },
+    {
+      "name": "Oriental Chicken",
+      "dishes": [
+        {"name":"Chilli chicken dry","short_description":"Spicy chicken","premium_description":"Crispy chicken tossed in chili garlic sauce.","tags":["non-vegetarian","chicken","starter","spicy"]},
+        {"name":"Chicken Sichuan","short_description":"Sichuan chicken","premium_description":"Chicken cooked in bold Sichuan sauce.","tags":["non-vegetarian","chicken","starter","spicy"]},
+        {"name":"Chicken hot garlic","short_description":"Garlic chicken","premium_description":"Chicken stir-fried in hot garlic sauce.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Salt and pepper chicken","short_description":"Salt pepper chicken","premium_description":"Chicken tossed with salt and pepper seasoning.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Chicken satay with peanut sauce","short_description":"Chicken satay","premium_description":"Grilled chicken skewers served with peanut sauce.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Tempura chicken","short_description":"Tempura chicken","premium_description":"Chicken coated in tempura batter and fried crispy.","tags":["non-vegetarian","chicken","starter","fried"]},
+        {"name":"Drums of heaven","short_description":"Chicken lollipops","premium_description":"Chicken lollipops fried and tossed in spicy sauce.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Sesame chicken","short_description":"Sesame chicken","premium_description":"Chicken tossed with sesame seeds and sauce.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Chicken ball with ginger chilli dry","short_description":"Chicken balls","premium_description":"Chicken balls tossed with ginger and chili seasoning.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Honey glazed chicken winglets","short_description":"Honey chicken wings","premium_description":"Chicken wings glazed with sweet honey sauce.","tags":["non-vegetarian","chicken","starter"]}
+      ]
+    },
+    {
+      "name": "Continental Fish",
+      "dishes": [
+        {"name":"Fish Fingers w/ tartar sauce","short_description":"Fish fingers","premium_description":"Crispy fish fingers served with tartar sauce.","tags":["non-vegetarian","fish","starter"]},
+        {"name":"Batter fried fish with chili mayonnaise","short_description":"Fried fish","premium_description":"Batter-fried fish served with chili mayo.","tags":["non-vegetarian","fish","starter"]},
+        {"name":"Italian Basil Pesto Fish","short_description":"Pesto fish","premium_description":"Fish flavored with basil pesto and herbs.","tags":["non-vegetarian","fish","starter"]},
+        {"name":"Fried Fish w/ Spicy Mayonnaise","short_description":"Fried fish","premium_description":"Crispy fried fish served with spicy mayo.","tags":["non-vegetarian","fish","starter"]},
+        {"name":"Crumb Fried Prawns with Chili mayo","short_description":"Fried prawns","premium_description":"Breaded prawns fried and served with chili mayo.","tags":["non-vegetarian","seafood","starter"]},
+        {"name":"Fish Croquettes","short_description":"Fish croquettes","premium_description":"Crispy croquettes filled with seasoned fish.","tags":["non-vegetarian","fish","starter"]}
+      ]
+    },
+    {
+      "name": "Continental Lamb",
+      "dishes": [
+        {"name":"Mutton Cutlets","short_description":"Mutton cutlets","premium_description":"Crispy fried mutton patties seasoned with spices.","tags":["non-vegetarian","lamb","starter"]},
+        {"name":"Mutton mince and onion Puff","short_description":"Mutton puff","premium_description":"Flaky pastry filled with minced mutton and onion.","tags":["non-vegetarian","lamb","starter"]},
+        {"name":"Meat Ball In BBQ Sauce","short_description":"Meatballs","premium_description":"Juicy meatballs served in smoky BBQ sauce.","tags":["non-vegetarian","lamb","starter"]}
+      ]
+    },
+    {
+      "name": "Continental Chicken",
+      "dishes": [
+        {"name":"Chicken and bell peppers skewer","short_description":"Chicken skewer","premium_description":"Grilled chicken with bell peppers on skewers.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"BBQ Chicken w/ bone","short_description":"BBQ chicken","premium_description":"Chicken cooked in smoky barbecue sauce.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Chicken & Mushroom Vol-au-vent","short_description":"Chicken pastry","premium_description":"Flaky pastry filled with chicken and mushroom.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Sun dried tomato Chicken Wings","short_description":"Chicken wings","premium_description":"Chicken wings flavored with sun-dried tomatoes.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Chicken cutlets","short_description":"Chicken cutlets","premium_description":"Crispy fried chicken patties.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Garlic Chicken Nuggets with Plum Sauce","short_description":"Chicken nuggets","premium_description":"Garlic-flavored nuggets served with plum sauce.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Chicken & Rosemary Puffs","short_description":"Chicken puff","premium_description":"Pastry filled with chicken and rosemary.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Chicken Winglets","short_description":"Chicken wings","premium_description":"Crispy chicken winglets seasoned with spices.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Mini Chicken Pizzas","short_description":"Mini pizza","premium_description":"Small pizzas topped with chicken and cheese.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Chicken Asparagus Quiche","short_description":"Quiche","premium_description":"Savory pie filled with chicken and asparagus.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Spanish Paprika & Garlic Chicken","short_description":"Paprika chicken","premium_description":"Chicken flavored with paprika and garlic.","tags":["non-vegetarian","chicken","starter"]},
+        {"name":"Chicken dumpling with BBQ sauce","short_description":"Chicken dumplings","premium_description":"Dumplings filled with chicken served with BBQ sauce.","tags":["non-vegetarian","chicken","starter"]}
+      ]
+    }
+  ]
+}

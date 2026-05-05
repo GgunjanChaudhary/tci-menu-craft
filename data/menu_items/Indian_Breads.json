@@ -1,0 +1,76 @@
+{
+  "category": "Indian Breads",
+  "cuisines": [
+    {
+      "name": "Indian",
+      "dishes": [
+        {
+          "name": "Tandoori roti",
+          "short_description": "Tandoori roti",
+          "premium_description": "Whole wheat flatbread baked in a traditional tandoor, offering a smoky flavor and crisp texture.",
+          "tags": ["bread","vegetarian","indian"]
+        },
+        {
+          "name": "Plain naan",
+          "short_description": "Plain naan",
+          "premium_description": "Soft and fluffy leavened bread baked in a tandoor, perfect with curries.",
+          "tags": ["bread","vegetarian","indian"]
+        },
+        {
+          "name": "Garlic naan",
+          "short_description": "Garlic naan",
+          "premium_description": "Naan infused with garlic and herbs, baked to a soft and aromatic finish.",
+          "tags": ["bread","vegetarian","indian"]
+        },
+        {
+          "name": "Butter naan",
+          "short_description": "Butter naan",
+          "premium_description": "Soft naan brushed with butter for a rich and indulgent taste.",
+          "tags": ["bread","vegetarian","indian"]
+        },
+        {
+          "name": "Missi roti",
+          "short_description": "Missi roti",
+          "premium_description": "Traditional flatbread made with gram flour and spices, offering a rustic flavor.",
+          "tags": ["bread","vegetarian","indian"]
+        },
+        {
+          "name": "Chili naan",
+          "short_description": "Chili naan",
+          "premium_description": "Spicy naan flavored with green chilies for a bold taste.",
+          "tags": ["bread","vegetarian","indian","spicy"]
+        },
+        {
+          "name": "Laccha paratha",
+          "short_description": "Layered paratha",
+          "premium_description": "Flaky layered flatbread cooked on a griddle with a crisp texture.",
+          "tags": ["bread","vegetarian","indian"]
+        },
+        {
+          "name": "Methi paratha",
+          "short_description": "Fenugreek paratha",
+          "premium_description": "Flatbread flavored with fresh fenugreek leaves, offering a unique aroma.",
+          "tags": ["bread","vegetarian","indian"]
+        },
+        {
+          "name": "Pudina paratha",
+          "short_description": "Mint paratha",
+          "premium_description": "Paratha infused with fresh mint, delivering a refreshing flavor.",
+          "tags": ["bread","vegetarian","indian"]
+        },
+        {
+          "name": "Cheese kulcha",
+          "short_description": "Cheese kulcha",
+          "premium_description": "Soft kulcha stuffed with melted cheese and baked in a tandoor.",
+          "tags": ["bread","vegetarian","indian"]
+        },
+        {
+          "name": "Paneer kulcha",
+          "short_description": "Paneer kulcha",
+          "premium_description": "Kulcha stuffed with spiced paneer filling and baked to perfection.",
+          "tags": ["bread","vegetarian","indian"]
+        }
+      ]
+    }
+  ]
+}

@@ -37,3 +37,8 @@ streamlit run app.py
 - **New dish** → Update the relevant CSV only
 - **New subcategory** → Add one CSV + one line in `config.py`
 - **Replace logo** → Drop your PNG into `assets/logo.png`
+
+## HTML-to-PDF note (Windows)
+
+- The Custom Menu flow supports HTML-based PDF generation via WeasyPrint.
+- On Windows, if WeasyPrint native dependencies are unavailable, use the built-in fallback PDF button in the app (ReportLab path).

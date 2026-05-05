@@ -1,0 +1,65 @@
+{
+  "category": "Salad Bar",
+  "cuisines": [
+    {
+      "name": "Western",
+      "dishes": [
+        {"name":"Potato, chicken and celery with mustard aioli","short_description":"Chicken potato salad","premium_description":"A creamy salad combining potato, chicken, and celery with mustard aioli dressing.","tags":["salad","non-vegetarian"]},
+        {"name":"Seafood, cucumber and dill salad","short_description":"Seafood salad","premium_description":"A refreshing salad of seafood, cucumber, and dill with a light dressing.","tags":["salad","seafood"]},
+        {"name":"Nicosia style potato and bean salad","short_description":"Potato bean salad","premium_description":"A Mediterranean-style salad with potatoes and beans dressed in herbs.","tags":["salad","vegetarian"]},
+        {"name":"Chicken and pineapple salad","short_description":"Chicken pineapple salad","premium_description":"A sweet and savory mix of chicken and pineapple with a light dressing.","tags":["salad","non-vegetarian"]},
+        {"name":"Sausage, bell pepper and baby corn salad","short_description":"Sausage salad","premium_description":"A hearty salad with sausage, bell peppers, and baby corn.","tags":["salad","non-vegetarian"]},
+        {"name":"Shredded lamb, bell pepper and spring onion salad","short_description":"Lamb salad","premium_description":"Tender shredded lamb tossed with bell peppers and spring onions.","tags":["salad","non-vegetarian"]},
+        {"name":"Cherry tomato, broccoli and button mushroom with aged balsamic vinegar","short_description":"Veg balsamic salad","premium_description":"Fresh vegetables dressed with aged balsamic vinegar for a tangy finish.","tags":["salad","vegetarian"]},
+        {"name":"Greek farmer style salad","short_description":"Greek salad","premium_description":"Classic Greek salad with fresh vegetables, olives, and feta cheese.","tags":["salad","vegetarian"]},
+        {"name":"Apple, green bean and walnut salad","short_description":"Apple walnut salad","premium_description":"A crunchy mix of apples, beans, and walnuts with a light dressing.","tags":["salad","vegetarian"]},
+        {"name":"Potato, American corn salad with mustard aioli","short_description":"Corn potato salad","premium_description":"Potato and corn salad tossed in creamy mustard aioli.","tags":["salad","vegetarian"]},
+        {"name":"Carrot, apple and sundried tomato salad","short_description":"Carrot apple salad","premium_description":"A colorful mix of carrot, apple, and sundried tomato.","tags":["salad","vegetarian"]},
+        {"name":"Tomato mozzarella salad","short_description":"Mozzarella salad","premium_description":"Fresh tomatoes paired with mozzarella and herbs.","tags":["salad","vegetarian"]},
+        {"name":"Cucumber mint yoghurt","short_description":"Cucumber yogurt","premium_description":"Cooling cucumber mixed with mint and yogurt.","tags":["salad","vegetarian"]},
+        {"name":"Mushroom salad with black olives, capers & semi-dried","short_description":"Mushroom salad","premium_description":"Mushroom salad with olives, capers, and herbs.","tags":["salad","vegetarian"]},
+        {"name":"Apple celery & walnut salad","short_description":"Apple celery salad","premium_description":"A refreshing mix of apple, celery, and walnuts.","tags":["salad","vegetarian"]},
+        {"name":"Cucumber salad with yoghurt dressing","short_description":"Cucumber salad","premium_description":"Cucumber tossed in a creamy yogurt dressing.","tags":["salad","vegetarian"]},
+        {"name":"Apple beans and sundried tomato salad","short_description":"Apple bean salad","premium_description":"A mix of apples, beans, and sundried tomatoes.","tags":["salad","vegetarian"]},
+        {"name":"Three beans salad","short_description":"Bean salad","premium_description":"A healthy blend of three types of beans.","tags":["salad","vegetarian"]},
+        {"name":"Hummus","short_description":"Chickpea dip","premium_description":"Smooth chickpea dip flavored with tahini and olive oil.","tags":["salad","vegetarian"]},
+        {"name":"Fatuous","short_description":"Middle eastern salad","premium_description":"A traditional Middle Eastern salad with herbs and crisp textures.","tags":["salad","vegetarian"]},
+        {"name":"Babaganoush","short_description":"Eggplant dip","premium_description":"Smoky eggplant dip blended with sesame and spices.","tags":["salad","vegetarian"]},
+        {"name":"Labneh","short_description":"Yogurt cheese","premium_description":"Strained yogurt served creamy and rich with herbs.","tags":["salad","vegetarian"]}
+      ]
+    },
+    {
+      "name": "Asian",
+      "dishes": [
+        {"name":"Thai chicken and raw papaya salad","short_description":"Thai papaya salad","premium_description":"A Thai-style salad with chicken and raw papaya in tangy dressing.","tags":["salad","non-vegetarian"]},
+        {"name":"Thai chicken and glass noodle salad","short_description":"Noodle salad","premium_description":"Glass noodles tossed with chicken in Thai dressing.","tags":["salad","non-vegetarian"]},
+        {"name":"Som tom salad","short_description":"Papaya salad","premium_description":"Classic Thai raw papaya salad with spicy and tangy flavors.","tags":["salad","vegetarian"]},
+        {"name":"Thai Glass noodles salad with peppers","short_description":"Glass noodle salad","premium_description":"Glass noodles tossed with peppers and Thai seasoning.","tags":["salad","vegetarian"]},
+        {"name":"Kimchi salad","short_description":"Kimchi","premium_description":"Fermented cabbage salad with Korean spices.","tags":["salad","vegetarian"]},
+        {"name":"Achar awak","short_description":"Pickled salad","premium_description":"Asian-style pickled vegetable preparation.","tags":["salad","vegetarian"]},
+        {"name":"Asian noodles salad","short_description":"Noodle salad","premium_description":"Noodles tossed with vegetables in Asian dressing.","tags":["salad","vegetarian"]},
+        {"name":"Cucumber and pineapple with thai chili sauce","short_description":"Fruit salad","premium_description":"Cucumber and pineapple tossed in Thai chili sauce.","tags":["salad","vegetarian"]}
+      ]
+    },
+    {
+      "name": "Indian",
+      "dishes": [
+        {"name":"Chicken Tikka chat","short_description":"Chicken chaat","premium_description":"Tandoori chicken served in chaat style with tangy toppings.","tags":["salad","non-vegetarian"]},
+        {"name":"Dhaba salad","short_description":"Dhaba salad","premium_description":"Simple Indian salad with onion, cucumber, and tomato.","tags":["salad","vegetarian"]},
+        {"name":"Kachumber salad","short_description":"Kachumber","premium_description":"Fresh chopped vegetables seasoned with lemon and spices.","tags":["salad","vegetarian"]},
+        {"name":"Fresh Fruit chat","short_description":"Fruit chaat","premium_description":"Seasonal fruits tossed with chaat masala.","tags":["salad","vegetarian"]},
+        {"name":"Aloo anar ki chat","short_description":"Potato chaat","premium_description":"Potatoes and pomegranate mixed with spices.","tags":["salad","vegetarian"]},
+        {"name":"Koshambir salad","short_description":"Koshambir","premium_description":"Traditional Indian salad with lentils and vegetables.","tags":["salad","vegetarian"]},
+        {"name":"Tandoori falon ki chaat","short_description":"Tandoori fruit chaat","premium_description":"Fruits lightly grilled and served in chaat style.","tags":["salad","vegetarian"]},
+        {"name":"Sprout salad","short_description":"Sprouts salad","premium_description":"Healthy mix of sprouts with seasoning.","tags":["salad","vegetarian","healthy"]},
+        {"name":"Channe ke chaat","short_description":"Chana chaat","premium_description":"Spiced chickpea chaat with tangy flavors.","tags":["salad","vegetarian"]},
+        {"name":"Aloo channa chat","short_description":"Aloo chana chaat","premium_description":"Potato and chickpea mix with spices.","tags":["salad","vegetarian"]},
+        {"name":"Papdi chat","short_description":"Papdi chaat","premium_description":"Crispy papdi topped with yogurt and chutneys.","tags":["salad","vegetarian"]},
+        {"name":"Dahi bhalla","short_description":"Dahi bhalla","premium_description":"Soft lentil dumplings soaked in yogurt with chutneys.","tags":["salad","vegetarian"]},
+        {"name":"Rajmah ki chat","short_description":"Rajma chaat","premium_description":"Kidney beans mixed with spices and herbs.","tags":["salad","vegetarian"]},
+        {"name":"Paneer tikka salad","short_description":"Paneer salad","premium_description":"Grilled paneer served over fresh salad base.","tags":["salad","vegetarian"]},
+        {"name":"Moong dal ki chat","short_description":"Moong dal chaat","premium_description":"Lentil-based chaat with tangy spices.","tags":["salad","vegetarian"]}
+      ]
+    }
+  ]
+}

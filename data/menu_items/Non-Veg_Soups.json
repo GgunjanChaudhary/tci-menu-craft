@@ -1,0 +1,134 @@
+{
+  "category": "Non Vegetarian Soup",
+  "cuisines": [
+    {
+      "name": "Indian",
+      "dishes": [
+        {
+          "name": "Murgh aur sabziyon ka shorba",
+          "short_description": "Chicken vegetable soup",
+          "premium_description": "A nourishing Indian broth made with chicken and vegetables, gently spiced for a comforting and wholesome flavor.",
+          "tags": ["non-vegetarian","soup","chicken","indian"]
+        }
+      ]
+    },
+    {
+      "name": "Continental",
+      "dishes": [
+        {
+          "name": "Brazilian chicken soup",
+          "short_description": "Chicken soup",
+          "premium_description": "A hearty Brazilian-style chicken soup with rich flavors and a comforting texture.",
+          "tags": ["non-vegetarian","soup","chicken"]
+        }
+      ]
+    },
+    {
+      "name": "Oriental",
+      "dishes": [
+        {
+          "name": "Chicken tom yum soup",
+          "short_description": "Chicken tom yum",
+          "premium_description": "A Thai-style soup with chicken, infused with lemongrass, lime, and chili for a bold flavor.",
+          "tags": ["non-vegetarian","soup","chicken","spicy"]
+        },
+        {
+          "name": "Chicken rainbow soup",
+          "short_description": "Chicken vegetable soup",
+          "premium_description": "A colorful mix of vegetables and chicken in a light, flavorful broth.",
+          "tags": ["non-vegetarian","soup","chicken"]
+        },
+        {
+          "name": "Chicken noodles soup",
+          "short_description": "Chicken noodle soup",
+          "premium_description": "A comforting soup with chicken and noodles in a savory broth.",
+          "tags": ["non-vegetarian","soup","chicken"]
+        },
+        {
+          "name": "Tomato pokchoy egg drop",
+          "short_description": "Egg drop soup",
+          "premium_description": "A light soup with tomato, bok choy, and silky egg ribbons.",
+          "tags": ["non-vegetarian","soup"]
+        },
+        {
+          "name": "Lung fang soup Chicken",
+          "short_description": "Chicken lung fung soup",
+          "premium_description": "A classic Chinese-style soup with chicken and vegetables in a thick broth.",
+          "tags": ["non-vegetarian","soup","chicken"]
+        },
+        {
+          "name": "Chicken man chow soup",
+          "short_description": "Chicken manchow",
+          "premium_description": "A spicy Indo-Chinese soup with chicken, vegetables, and crispy noodles.",
+          "tags": ["non-vegetarian","soup","chicken","spicy"]
+        },
+        {
+          "name": "Tom yum soup Chicken",
+          "short_description": "Chicken tom yum",
+          "premium_description": "A tangy and aromatic Thai soup with chicken and herbs.",
+          "tags": ["non-vegetarian","soup","chicken","spicy"]
+        },
+        {
+          "name": "Lemongrass and coriander flavored chicken soup",
+          "short_description": "Herbal chicken soup",
+          "premium_description": "A fragrant soup infused with lemongrass and coriander, offering a refreshing flavor.",
+          "tags": ["non-vegetarian","soup","chicken"]
+        },
+        {
+          "name": "Sweet corn chicken soup",
+          "short_description": "Corn chicken soup",
+          "premium_description": "A mildly sweet and comforting soup made with chicken and sweet corn.",
+          "tags": ["non-vegetarian","soup","chicken"]
+        },
+        {
+          "name": "Minced chicken soup with egg drop",
+          "short_description": "Minced chicken soup",
+          "premium_description": "A rich soup with minced chicken and delicate egg ribbons.",
+          "tags": ["non-vegetarian","soup","chicken"]
+        },
+        {
+          "name": "Gaeng Jeud Woon sen",
+          "short_description": "Glass noodle soup",
+          "premium_description": "A light Thai soup with glass noodles and chicken in a clear broth.",
+          "tags": ["non-vegetarian","soup","chicken"]
+        },
+        {
+          "name": "Chicken Wonton Soup",
+          "short_description": "Wonton soup",
+          "premium_description": "Delicate wontons filled with chicken served in a flavorful broth.",
+          "tags": ["non-vegetarian","soup","chicken"]
+        },
+        {
+          "name": "Tom Yam Prawn Soup",
+          "short_description": "Prawn tom yum",
+          "premium_description": "A tangy and spicy Thai soup made with prawns and aromatic herbs.",
+          "tags": ["non-vegetarian","soup","seafood","spicy"]
+        },
+        {
+          "name": "Sweet Corn Soup With Crab Meat",
+          "short_description": "Corn crab soup",
+          "premium_description": "A comforting soup combining sweet corn with tender crab meat.",
+          "tags": ["non-vegetarian","soup","seafood"]
+        },
+        {
+          "name": "Fish Soup With Coriander",
+          "short_description": "Fish soup",
+          "premium_description": "A light fish broth enhanced with fresh coriander and mild spices.",
+          "tags": ["non-vegetarian","soup","fish"]
+        },
+        {
+          "name": "Seafood Laksa",
+          "short_description": "Laksa soup",
+          "premium_description": "A rich and aromatic Southeast Asian soup with seafood, coconut, and spices.",
+          "tags": ["non-vegetarian","soup","seafood"]
+        },
+        {
+          "name": "Miso soup",
+          "short_description": "Miso soup",
+          "premium_description": "A traditional Japanese soup made with miso broth and delicate ingredients.",
+          "tags": ["non-vegetarian","soup"]
+        }
+      ]
+    }
+  ]
+}

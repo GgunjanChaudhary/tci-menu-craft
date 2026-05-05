@@ -1,0 +1,72 @@
+{
+  "category": "Vegetarian Starters",
+  "cuisines": [
+    {
+      "name": "Indian",
+      "dishes": [
+        {"name":"Dahi ke kebab","short_description":"Yogurt kebabs","premium_description":"Soft and creamy yogurt kebabs infused with mild spices and pan-fried to perfection.","tags":["vegetarian","starter","indian"]},
+        {"name":"Pudina paneer tikka","short_description":"Mint paneer tikka","premium_description":"Paneer cubes marinated in mint and spices, grilled for a smoky flavor.","tags":["vegetarian","starter","grilled"]},
+        {"name":"Kashmiri mirch ka paneer tikka","short_description":"Spicy paneer tikka","premium_description":"Paneer marinated in Kashmiri chili spices and grilled in a tandoor.","tags":["vegetarian","starter","spicy"]},
+        {"name":"Tandoor ke phool","short_description":"Tandoori vegetables","premium_description":"Assorted vegetables marinated in spices and roasted in a traditional tandoor.","tags":["vegetarian","starter"]},
+        {"name":"Chowk ki tikki","short_description":"Crispy tikki","premium_description":"Street-style crispy potato patties seasoned with Indian spices.","tags":["vegetarian","starter"]},
+        {"name":"Hara bhara kebab","short_description":"Spinach kebab","premium_description":"Nutritious kebabs made with spinach and peas, pan-fried to perfection.","tags":["vegetarian","starter","healthy"]},
+        {"name":"Tandoori vilayti chat","short_description":"Tandoori chaat","premium_description":"Fusion chaat with tandoori flavors and tangy toppings.","tags":["vegetarian","starter"]},
+        {"name":"Hare matter ki tikki","short_description":"Pea tikki","premium_description":"Green pea patties flavored with spices and shallow fried.","tags":["vegetarian","starter"]},
+        {"name":"Palak matter aur khumbh ke seekh","short_description":"Spinach mushroom seekh","premium_description":"Seekh kebabs made with spinach, peas, and mushrooms, grilled to perfection.","tags":["vegetarian","starter"]},
+        {"name":"Bhutta aur matter ki tikki","short_description":"Corn pea tikki","premium_description":"Corn and peas patties with spices, shallow fried until crisp.","tags":["vegetarian","starter"]},
+        {"name":"Teekha lahsuni khumb","short_description":"Garlic mushrooms","premium_description":"Mushrooms tossed in spicy garlic seasoning for a bold flavor.","tags":["vegetarian","starter","spicy"]},
+        {"name":"Bhuttey ke kebab","short_description":"Corn kebabs","premium_description":"Sweet corn kebabs blended with spices and pan-fried.","tags":["vegetarian","starter"]},
+        {"name":"Makai amritsari","short_description":"Amritsari corn","premium_description":"Crispy fried corn tossed in Amritsari spices.","tags":["vegetarian","starter","fried"]},
+        {"name":"Subz ke galauti kebab","short_description":"Veg galouti kebab","premium_description":"Soft melt-in-mouth vegetable kebabs inspired by Awadhi cuisine.","tags":["vegetarian","starter"]},
+        {"name":"Lal mirch ka paneer tikka","short_description":"Red chili paneer tikka","premium_description":"Paneer marinated in red chili spices and grilled.","tags":["vegetarian","starter","spicy"]},
+        {"name":"Aloo gulistan","short_description":"Stuffed potatoes","premium_description":"Potatoes stuffed with flavorful filling and cooked to perfection.","tags":["vegetarian","starter"]},
+        {"name":"Subz aur meva ki seekh","short_description":"Veg nut seekh","premium_description":"Seekh kebabs made with vegetables and dry fruits, grilled delicately.","tags":["vegetarian","starter"]}
+      ]
+    },
+    {
+      "name": "Oriental",
+      "dishes": [
+        {"name":"Sichuan Chilly Paneer","short_description":"Spicy paneer","premium_description":"Paneer tossed in bold Sichuan chili sauce with garlic and peppers.","tags":["vegetarian","starter","spicy"]},
+        {"name":"Mushroom Hot Garlic","short_description":"Garlic mushroom","premium_description":"Mushrooms stir-fried in a hot garlic sauce.","tags":["vegetarian","starter"]},
+        {"name":"Vegetable Spring Roll","short_description":"Spring rolls","premium_description":"Crispy rolls filled with seasoned vegetables.","tags":["vegetarian","starter","fried"]},
+        {"name":"Golden Fried Young Corn","short_description":"Fried corn","premium_description":"Crispy young corn tossed with seasoning.","tags":["vegetarian","starter","fried"]},
+        {"name":"Salt & Pepper Vegetables","short_description":"Salt pepper veg","premium_description":"Vegetables tossed with salt, pepper, and spices.","tags":["vegetarian","starter"]},
+        {"name":"Salt & Pepper Paneer","short_description":"Salt pepper paneer","premium_description":"Paneer cubes sautéed with salt and pepper seasoning.","tags":["vegetarian","starter"]},
+        {"name":"Vegetable Tempura","short_description":"Tempura veg","premium_description":"Lightly battered and fried vegetables in tempura style.","tags":["vegetarian","starter","fried"]},
+        {"name":"Potato and Corn Cake","short_description":"Potato corn cake","premium_description":"Crispy cakes made with potato and corn.","tags":["vegetarian","starter"]},
+        {"name":"Bean Curd in Spicy Sauce","short_description":"Spicy tofu","premium_description":"Tofu cooked in a spicy oriental sauce.","tags":["vegetarian","starter","spicy"]},
+        {"name":"Mongolian cauliflower","short_description":"Mongolian cauliflower","premium_description":"Cauliflower tossed in Mongolian-style sauce.","tags":["vegetarian","starter"]},
+        {"name":"Chilly mushroom","short_description":"Spicy mushroom","premium_description":"Mushrooms tossed in chili garlic sauce.","tags":["vegetarian","starter","spicy"]},
+        {"name":"Honey chilly vegetable","short_description":"Honey chili veg","premium_description":"Vegetables tossed in sweet and spicy honey chili sauce.","tags":["vegetarian","starter"]},
+        {"name":"Thai crispy vegetable","short_description":"Crispy veg","premium_description":"Crispy vegetables tossed in Thai-style sauce.","tags":["vegetarian","starter"]},
+        {"name":"Honey chilly potato","short_description":"Honey chili potato","premium_description":"Crispy potatoes coated in sweet and spicy sauce.","tags":["vegetarian","starter"]},
+        {"name":"Paneer Manchurian dry","short_description":"Paneer manchurian","premium_description":"Paneer tossed in thick Indo-Chinese sauce.","tags":["vegetarian","starter"]}
+      ]
+    },
+    {
+      "name": "Continental",
+      "dishes": [
+        {"name":"Vegetable cutlets","short_description":"Veg cutlets","premium_description":"Crispy vegetable patties served golden fried.","tags":["vegetarian","starter"]},
+        {"name":"Cheese balls","short_description":"Cheese balls","premium_description":"Golden fried cheese balls with gooey center.","tags":["vegetarian","starter","fried"]},
+        {"name":"Corn cheese nuggets","short_description":"Corn nuggets","premium_description":"Crispy nuggets filled with corn and cheese.","tags":["vegetarian","starter"]},
+        {"name":"Vegetable croquets","short_description":"Veg croquettes","premium_description":"Breaded vegetable croquettes fried to perfection.","tags":["vegetarian","starter"]},
+        {"name":"Mushroom vol –au- vent","short_description":"Mushroom pastry","premium_description":"Flaky pastry filled with mushroom mixture.","tags":["vegetarian","starter"]},
+        {"name":"Corn vol –au- vent","short_description":"Corn pastry","premium_description":"Flaky pastry filled with creamy corn filling.","tags":["vegetarian","starter"]},
+        {"name":"Chili cheese toast","short_description":"Cheese toast","premium_description":"Toasted bread topped with chili and melted cheese.","tags":["vegetarian","starter"]},
+        {"name":"Mini square pizza","short_description":"Mini pizza","premium_description":"Small pizzas topped with vegetables and cheese.","tags":["vegetarian","starter"]},
+        {"name":"Vegetable bruschetta","short_description":"Bruschetta","premium_description":"Toasted bread topped with seasoned vegetables.","tags":["vegetarian","starter"]},
+        {"name":"Arancini (risotto balls) with spicy aioli","short_description":"Arancini","premium_description":"Crispy risotto balls served with spicy aioli.","tags":["vegetarian","starter"]},
+        {"name":"Crumb Fried Mushrooms","short_description":"Fried mushrooms","premium_description":"Mushrooms coated and fried to a crispy texture.","tags":["vegetarian","starter"]},
+        {"name":"Cheese Fondue","short_description":"Cheese fondue","premium_description":"Rich melted cheese served as a dip.","tags":["vegetarian","starter"]},
+        {"name":"Spinach and Cheese Quiche","short_description":"Quiche","premium_description":"Savory pie filled with spinach and cheese.","tags":["vegetarian","starter"]},
+        {"name":"Batter fried Baby corn","short_description":"Fried baby corn","premium_description":"Baby corn coated and fried crispy.","tags":["vegetarian","starter"]},
+        {"name":"Potato and Cottage Cheese Dumplings","short_description":"Veg dumplings","premium_description":"Dumplings made with potato and paneer filling.","tags":["vegetarian","starter"]},
+        {"name":"Asparagus & Corn Quiche","short_description":"Quiche","premium_description":"Savory pie with asparagus and corn filling.","tags":["vegetarian","starter"]},
+        {"name":"Cottage Cheese & Bell Pepper Skewer","short_description":"Paneer skewer","premium_description":"Paneer and bell peppers grilled on skewers.","tags":["vegetarian","starter"]},
+        {"name":"Mushroom And Corn Vol-Au-Vent","short_description":"Pastry","premium_description":"Flaky pastry filled with mushroom and corn.","tags":["vegetarian","starter"]},
+        {"name":"Mini Vegetable Pizzas","short_description":"Mini pizza","premium_description":"Small pizzas topped with vegetables.","tags":["vegetarian","starter"]},
+        {"name":"Falafel With Garlic Yogurt","short_description":"Falafel","premium_description":"Crispy chickpea balls served with garlic yogurt.","tags":["vegetarian","starter"]}
+      ]
+    }
+  ]
+}

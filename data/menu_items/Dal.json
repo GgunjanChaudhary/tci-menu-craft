@@ -1,0 +1,70 @@
+{
+  "category": "Dal",
+  "cuisines": [
+    {
+      "name": "Indian",
+      "dishes": [
+        {
+          "name": "Dal amritsari",
+          "short_description": "Amritsari dal",
+          "premium_description": "A rich Punjabi-style dal cooked with aromatic spices and a robust flavor profile.",
+          "tags": ["dal","vegetarian","indian"]
+        },
+        {
+          "name": "Channa dal",
+          "short_description": "Chana dal",
+          "premium_description": "Split chickpeas cooked with spices for a hearty and comforting dish.",
+          "tags": ["dal","vegetarian","indian"]
+        },
+        {
+          "name": "Dal makhani",
+          "short_description": "Makhani dal",
+          "premium_description": "Black lentils slow-cooked with butter and cream for a rich and indulgent taste.",
+          "tags": ["dal","vegetarian","indian"]
+        },
+        {
+          "name": "Dal yellow tarkewali",
+          "short_description": "Yellow dal",
+          "premium_description": "Yellow lentils tempered with spices for a simple yet flavorful preparation.",
+          "tags": ["dal","vegetarian","indian"]
+        },
+        {
+          "name": "Dal panchratan",
+          "short_description": "Mixed dal",
+          "premium_description": "A blend of five lentils cooked together with aromatic spices.",
+          "tags": ["dal","vegetarian","indian"]
+        },
+        {
+          "name": "Pindi cholle",
+          "short_description": "Chole",
+          "premium_description": "Classic Punjabi chickpeas cooked with bold spices and a rustic flavor.",
+          "tags": ["dal","vegetarian","indian"]
+        },
+        {
+          "name": "Rajma Masala",
+          "short_description": "Rajma curry",
+          "premium_description": "Kidney beans cooked in a rich tomato-based gravy with spices.",
+          "tags": ["dal","vegetarian","indian"]
+        },
+        {
+          "name": "Dal sultani",
+          "short_description": "Sultani dal",
+          "premium_description": "A royal preparation of lentils enriched with cream and spices.",
+          "tags": ["dal","vegetarian","indian"]
+        },
+        {
+          "name": "Dal maharani",
+          "short_description": "Maharani dal",
+          "premium_description": "A luxurious lentil preparation with rich flavors and creamy texture.",
+          "tags": ["dal","vegetarian","indian"]
+        },
+        {
+          "name": "Kadi pakoda",
+          "short_description": "Kadhi pakoda",
+          "premium_description": "Yogurt-based curry with gram flour dumplings, flavored with spices.",
+          "tags": ["dal","vegetarian","indian"]
+        }
+      ]
+    }
+  ]
+}

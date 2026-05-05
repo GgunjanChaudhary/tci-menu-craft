@@ -1,0 +1,194 @@
+{
+  "category": "Main Course Non Vegetarian Seafood",
+  "cuisines": [
+    {
+      "name": "Indian",
+      "dishes": [
+        {
+          "name": "Punjabi fish curry",
+          "short_description": "Fish curry",
+          "premium_description": "Fresh fish simmered in a robust Punjabi-style gravy with aromatic spices.",
+          "tags": ["non-vegetarian","seafood","fish","main course","indian"]
+        },
+        {
+          "name": "Fish tikka",
+          "short_description": "Grilled fish",
+          "premium_description": "Fish marinated in spices and grilled for a smoky, flavorful finish.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Macchli tariwali",
+          "short_description": "Fish curry",
+          "premium_description": "Fish cooked in a light, spiced gravy with traditional Indian flavors.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Coconut fish curry",
+          "short_description": "Coconut fish",
+          "premium_description": "Fish cooked in a rich coconut-based gravy infused with coastal spices.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Goan fish curry",
+          "short_description": "Goan fish curry",
+          "premium_description": "Tangy and spicy Goan-style fish curry with coconut and tamarind notes.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Fish Amritsari",
+          "short_description": "Amritsari fish",
+          "premium_description": "Crispy fried fish prepared with classic Amritsari spices.",
+          "tags": ["non-vegetarian","fish","main course","fried"]
+        }
+      ]
+    },
+    {
+      "name": "Continental",
+      "dishes": [
+        {
+          "name": "Grilled fish with grilled vegetable & black olive",
+          "short_description": "Grilled fish",
+          "premium_description": "Fish fillet grilled and served with vegetables and black olives.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Dice miso fish fillet with potato & leeks grain with ponzu sauce",
+          "short_description": "Miso fish",
+          "premium_description": "Fish fillet flavored with miso, served with grains, potato, and ponzu sauce.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Batter fish, tartare sauce with assorted salad",
+          "short_description": "Batter fish",
+          "premium_description": "Crispy batter-fried fish served with tartare sauce and fresh salad.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Pan fried fish, caramelized onion sauce",
+          "short_description": "Pan fried fish",
+          "premium_description": "Fish pan-fried and served with rich caramelized onion sauce.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Slice fish with hot garlic sauce",
+          "short_description": "Garlic fish",
+          "premium_description": "Fish slices cooked in a bold hot garlic sauce.",
+          "tags": ["non-vegetarian","fish","main course","spicy"]
+        },
+        {
+          "name": "Steamed fish, dried chili, ginger, black bean vinegar",
+          "short_description": "Steamed fish",
+          "premium_description": "Delicately steamed fish with chili, ginger, and black bean vinegar sauce.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Baked, tomato cous- cous and caper butter sauce",
+          "short_description": "Baked fish",
+          "premium_description": "Baked fish served with tomato couscous and caper butter sauce.",
+          "tags": ["non-vegetarian","fish","main course"]
+        }
+      ]
+    },
+    {
+      "name": "Oriental",
+      "dishes": [
+        {
+          "name": "Fish with hot garlic sauce",
+          "short_description": "Garlic fish",
+          "premium_description": "Fish cooked in a spicy hot garlic sauce with bold flavors.",
+          "tags": ["non-vegetarian","fish","main course","spicy"]
+        },
+        {
+          "name": "Steamed fish, dried chili, ginger, black bean sauce",
+          "short_description": "Steamed fish",
+          "premium_description": "Steamed fish infused with chili, ginger, and black bean sauce.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Steamed fish with butter chill garlic sauce",
+          "short_description": "Butter garlic fish",
+          "premium_description": "Steamed fish topped with butter chili garlic sauce.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Fish thai red curry",
+          "short_description": "Thai red curry fish",
+          "premium_description": "Fish cooked in rich Thai red curry with coconut and spices.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Fish thai green curry",
+          "short_description": "Thai green curry fish",
+          "premium_description": "Fish simmered in aromatic Thai green curry with herbs.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Grilled Fish with yellow curry",
+          "short_description": "Yellow curry fish",
+          "premium_description": "Grilled fish served with flavorful yellow curry sauce.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Fish in chili basil sauce",
+          "short_description": "Basil fish",
+          "premium_description": "Fish cooked in chili basil sauce for a fragrant finish.",
+          "tags": ["non-vegetarian","fish","main course","spicy"]
+        },
+        {
+          "name": "Fish in Sichuan sauce",
+          "short_description": "Sichuan fish",
+          "premium_description": "Fish cooked in bold Sichuan sauce with chili and spices.",
+          "tags": ["non-vegetarian","fish","main course","spicy"]
+        },
+        {
+          "name": "Fish ginger coriander sauce",
+          "short_description": "Ginger fish",
+          "premium_description": "Fish cooked in a fresh ginger and coriander sauce.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Honey Sesame Prawn",
+          "short_description": "Honey prawn",
+          "premium_description": "Crispy prawns glazed with honey and sesame seeds.",
+          "tags": ["non-vegetarian","seafood","prawn","main course"]
+        },
+        {
+          "name": "Prawn Ginger Spring Onion",
+          "short_description": "Ginger prawn",
+          "premium_description": "Prawns sautéed with ginger and spring onions for a fresh flavor.",
+          "tags": ["non-vegetarian","seafood","prawn","main course"]
+        },
+        {
+          "name": "Sautéed Prawn In Hot & Garlic Sauce",
+          "short_description": "Garlic prawn",
+          "premium_description": "Prawns sautéed in spicy hot garlic sauce.",
+          "tags": ["non-vegetarian","seafood","prawn","main course","spicy"]
+        },
+        {
+          "name": "Sliced Fish In Manchurian Sauce",
+          "short_description": "Manchurian fish",
+          "premium_description": "Fish cooked in Indo-Chinese Manchurian sauce.",
+          "tags": ["non-vegetarian","fish","main course"]
+        },
+        {
+          "name": "Prawn Sichuan",
+          "short_description": "Sichuan prawn",
+          "premium_description": "Prawns cooked in bold Sichuan chili sauce.",
+          "tags": ["non-vegetarian","seafood","prawn","main course","spicy"]
+        },
+        {
+          "name": "Sautéed Prawn In Black Bean Sauce",
+          "short_description": "Black bean prawn",
+          "premium_description": "Prawns cooked in savory black bean sauce.",
+          "tags": ["non-vegetarian","seafood","prawn","main course"]
+        },
+        {
+          "name": "Sautée Prawn In Hot Bean Sauce",
+          "short_description": "Bean sauce prawn",
+          "premium_description": "Prawns sautéed in spicy bean sauce with bold flavors.",
+          "tags": ["non-vegetarian","seafood","prawn","main course","spicy"]
+        }
+      ]
+    }
+  ]
+}

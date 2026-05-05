@@ -1,0 +1,52 @@
+{
+  "category": "Noodles & Rice",
+  "cuisines": [
+    {
+      "name": "Oriental",
+      "dishes": [
+        {
+          "name": "Singapore noodles",
+          "short_description": "Singapore noodles",
+          "premium_description": "Thin noodles stir-fried with vegetables and spices in a Singapore-style preparation.",
+          "tags": ["noodles","vegetarian","oriental"]
+        },
+        {
+          "name": "Vegetable Hakka noodles",
+          "short_description": "Hakka noodles",
+          "premium_description": "Classic Hakka noodles stir-fried with vegetables and sauces.",
+          "tags": ["noodles","vegetarian","oriental"]
+        },
+        {
+          "name": "Pad Thai noodle",
+          "short_description": "Pad Thai",
+          "premium_description": "Thai-style noodles tossed with vegetables and a tangy-sweet sauce.",
+          "tags": ["noodles","vegetarian","oriental"]
+        },
+        {
+          "name": "Vegetables Sichuan fried rice",
+          "short_description": "Sichuan fried rice",
+          "premium_description": "Fried rice cooked with vegetables and bold Sichuan spices.",
+          "tags": ["rice","vegetarian","oriental","spicy"]
+        },
+        {
+          "name": "Veg. Fried rice",
+          "short_description": "Veg fried rice",
+          "premium_description": "Classic fried rice prepared with vegetables and light seasoning.",
+          "tags": ["rice","vegetarian","oriental"]
+        },
+        {
+          "name": "Young chow fried rice",
+          "short_description": "Young chow rice",
+          "premium_description": "Traditional Chinese-style fried rice with vegetables and seasoning.",
+          "tags": ["rice","vegetarian","oriental"]
+        },
+        {
+          "name": "Thai fried rice",
+          "short_description": "Thai rice",
+          "premium_description": "Fried rice prepared in Thai style with herbs and flavors.",
+          "tags": ["rice","vegetarian","oriental"]
+        }
+      ]
+    }
+  ]
+}

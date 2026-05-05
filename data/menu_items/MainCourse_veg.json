@@ -1,0 +1,87 @@
+{
+  "category": "Main Course Vegetarian",
+  "cuisines": [
+    {
+      "name": "Indian",
+      "dishes": [
+        {"name":"Dhingri palak","short_description":"Mushroom spinach","premium_description":"Mushrooms cooked in a rich spinach gravy with aromatic spices.","tags":["vegetarian","main course","indian"]},
+        {"name":"Khade masala ka paneer","short_description":"Paneer curry","premium_description":"Paneer cooked with whole spices in a flavorful gravy.","tags":["vegetarian","main course","indian"]},
+        {"name":"Aloo Gobi ki sabzi","short_description":"Aloo gobi","premium_description":"Classic combination of potatoes and cauliflower cooked with Indian spices.","tags":["vegetarian","main course","indian"]},
+        {"name":"Malai kofta","short_description":"Kofta curry","premium_description":"Soft dumplings made of paneer and vegetables served in a creamy gravy.","tags":["vegetarian","main course","indian"]},
+        {"name":"Subz bemishal","short_description":"Mixed vegetables","premium_description":"A medley of vegetables cooked in a rich and flavorful sauce.","tags":["vegetarian","main course"]},
+        {"name":"Vegetable nargishi kofta","short_description":"Veg kofta","premium_description":"Stuffed vegetable dumplings served in a rich gravy.","tags":["vegetarian","main course"]},
+        {"name":"Dhingri do pyaza","short_description":"Mushroom curry","premium_description":"Mushrooms cooked with double onions in a spiced gravy.","tags":["vegetarian","main course"]},
+        {"name":"Lehsooni palak","short_description":"Garlic spinach","premium_description":"Spinach cooked with garlic for a bold and aromatic flavor.","tags":["vegetarian","main course"]},
+        {"name":"Sarson ka saag","short_description":"Mustard greens","premium_description":"Traditional Punjabi dish made with mustard leaves and spices.","tags":["vegetarian","main course"]},
+        {"name":"Rang birange mirch ka salan","short_description":"Capsicum curry","premium_description":"Colorful bell peppers cooked in a spiced gravy.","tags":["vegetarian","main course"]},
+        {"name":"Mushroom hara pyaaz","short_description":"Mushroom spring onion","premium_description":"Mushrooms sautéed with green onions and spices.","tags":["vegetarian","main course"]},
+        {"name":"Achari bhindi aur aloo","short_description":"Bhindi aloo","premium_description":"Okra and potatoes cooked with pickling spices.","tags":["vegetarian","main course"]},
+        {"name":"Aloo hara pyaaz","short_description":"Potato spring onion","premium_description":"Potatoes cooked with fresh green onions and spices.","tags":["vegetarian","main course"]},
+        {"name":"Hing dhaniya ke aloo","short_description":"Spiced potatoes","premium_description":"Potatoes flavored with asafoetida and coriander.","tags":["vegetarian","main course"]},
+        {"name":"Bemisal aloo","short_description":"Special potatoes","premium_description":"A unique preparation of potatoes with aromatic spices.","tags":["vegetarian","main course"]},
+        {"name":"Vegetable jalferzi","short_description":"Veg jalfrezi","premium_description":"Vegetables stir-fried in tangy and spicy gravy.","tags":["vegetarian","main course"]},
+        {"name":"Subz meloni","short_description":"Mixed veg curry","premium_description":"Seasonal vegetables cooked in a flavorful gravy.","tags":["vegetarian","main course"]},
+        {"name":"Muglai aloo","short_description":"Mughlai potatoes","premium_description":"Potatoes cooked in a rich Mughlai-style gravy.","tags":["vegetarian","main course"]},
+        {"name":"Makai palak","short_description":"Corn spinach","premium_description":"Sweet corn cooked with spinach and spices.","tags":["vegetarian","main course"]},
+        {"name":"Baby corn and mushroom ki sabzi","short_description":"Corn mushroom curry","premium_description":"Baby corn and mushrooms cooked together in a rich gravy.","tags":["vegetarian","main course"]},
+        {"name":"Aloo matter paneer","short_description":"Aloo matar paneer","premium_description":"Potatoes, peas, and paneer cooked in a tomato-based gravy.","tags":["vegetarian","main course"]},
+        {"name":"Paneer lababdar","short_description":"Paneer curry","premium_description":"Paneer cooked in a rich tomato-based gravy with spices.","tags":["vegetarian","main course"]},
+        {"name":"Paneer kali mirch","short_description":"Pepper paneer","premium_description":"Paneer cooked with black pepper and spices.","tags":["vegetarian","main course"]},
+        {"name":"Paneer dhania adraki","short_description":"Paneer ginger coriander","premium_description":"Paneer cooked with coriander and ginger flavors.","tags":["vegetarian","main course"]},
+        {"name":"Palak paneer","short_description":"Spinach paneer","premium_description":"Paneer cubes cooked in smooth spinach gravy.","tags":["vegetarian","main course"]},
+        {"name":"Matter paneer","short_description":"Matar paneer","premium_description":"Paneer and peas cooked in a tomato-based gravy.","tags":["vegetarian","main course"]},
+        {"name":"Paneer jhal frezi","short_description":"Paneer jalfrezi","premium_description":"Paneer stir-fried with vegetables in spicy gravy.","tags":["vegetarian","main course"]},
+        {"name":"Paneer ki khurchan","short_description":"Paneer bhurji style","premium_description":"Shredded paneer cooked with spices and vegetables.","tags":["vegetarian","main course"]},
+        {"name":"Methi paneer","short_description":"Fenugreek paneer","premium_description":"Paneer cooked with fenugreek leaves in a rich gravy.","tags":["vegetarian","main course"]},
+        {"name":"Achari paneer","short_description":"Pickled paneer","premium_description":"Paneer cooked with tangy pickling spices.","tags":["vegetarian","main course"]},
+        {"name":"Paneer changezi","short_description":"Paneer changezi","premium_description":"Paneer cooked in a rich and spicy Mughlai gravy.","tags":["vegetarian","main course"]},
+        {"name":"Paneer bhurzi","short_description":"Paneer scramble","premium_description":"Crumbled paneer cooked with spices and herbs.","tags":["vegetarian","main course"]}
+      ]
+    },
+    {
+      "name": "Continental",
+      "dishes": [
+        {"name":"Fussily pasta in tomato sauce & parmesan shaving","short_description":"Pasta tomato","premium_description":"Pasta cooked in tomato sauce topped with parmesan shavings.","tags":["vegetarian","main course"]},
+        {"name":"Grilled exotic vegetables with rosemary & garlic","short_description":"Grilled vegetables","premium_description":"Exotic vegetables grilled with rosemary and garlic.","tags":["vegetarian","main course","healthy"]},
+        {"name":"Pasta in creamy mushroom sauce & parmesan shaving","short_description":"Creamy pasta","premium_description":"Pasta in rich mushroom cream sauce with parmesan.","tags":["vegetarian","main course"]},
+        {"name":"Vegetable lasagna","short_description":"Veg lasagna","premium_description":"Layered pasta with vegetables and cheese baked to perfection.","tags":["vegetarian","main course"]},
+        {"name":"Polenta cake, tomato comfit, black olive & basil","short_description":"Polenta","premium_description":"Polenta cake served with tomato confit and basil.","tags":["vegetarian","main course"]},
+        {"name":"Lasagna style polenta with fricassee of mushroom and green pea","short_description":"Polenta lasagna","premium_description":"Layered polenta with mushrooms and peas.","tags":["vegetarian","main course"]},
+        {"name":"Penne arrabiata","short_description":"Arrabiata pasta","premium_description":"Penne pasta cooked in spicy tomato sauce.","tags":["vegetarian","main course","spicy"]},
+        {"name":"Spaghetti with mushroom and tomato sauce","short_description":"Spaghetti","premium_description":"Spaghetti tossed with mushroom and tomato sauce.","tags":["vegetarian","main course"]}
+      ]
+    },
+    {
+      "name": "Oriental",
+      "dishes": [
+        {"name":"Stir fried Chinese greens","short_description":"Chinese greens","premium_description":"Fresh greens stir-fried with garlic and sauce.","tags":["vegetarian","main course"]},
+        {"name":"Vegetables in Manchurian sauce","short_description":"Veg manchurian","premium_description":"Vegetables cooked in Indo-Chinese Manchurian sauce.","tags":["vegetarian","main course"]},
+        {"name":"Stir fried eggplant nyonya style","short_description":"Eggplant stir fry","premium_description":"Eggplant cooked in Nyonya style spices.","tags":["vegetarian","main course"]},
+        {"name":"Potato and spinach in hot garlic sauce","short_description":"Potato spinach","premium_description":"Potato and spinach tossed in hot garlic sauce.","tags":["vegetarian","main course"]},
+        {"name":"Green Thai veg. curry","short_description":"Thai green curry","premium_description":"Vegetables cooked in Thai green curry with coconut.","tags":["vegetarian","main course"]},
+        {"name":"Tofu and vegetable tossed in ginger and tomato sauce","short_description":"Tofu veg","premium_description":"Tofu and vegetables cooked in ginger tomato sauce.","tags":["vegetarian","main course"]},
+        {"name":"Vegetable, tofu and mushroom tossed in black bean sauce","short_description":"Black bean veg","premium_description":"Vegetables and tofu tossed in black bean sauce.","tags":["vegetarian","main course"]},
+        {"name":"Potato vegetable yellow curry","short_description":"Yellow curry","premium_description":"Vegetables cooked in Thai yellow curry.","tags":["vegetarian","main course"]},
+        {"name":"Red Thai veg. curry","short_description":"Red curry","premium_description":"Vegetables cooked in Thai red curry.","tags":["vegetarian","main course"]},
+        {"name":"Tahiti vegetable chili garlic sauce","short_description":"Chili garlic veg","premium_description":"Vegetables tossed in chili garlic sauce.","tags":["vegetarian","main course","spicy"]},
+        {"name":"Basil chili cauliflower","short_description":"Cauliflower chili","premium_description":"Cauliflower tossed in basil chili sauce.","tags":["vegetarian","main course"]},
+        {"name":"Tofu pineapple and potato curry","short_description":"Tofu curry","premium_description":"Tofu cooked with pineapple and potatoes.","tags":["vegetarian","main course"]},
+        {"name":"Long bean with black bean sauce","short_description":"Beans black bean","premium_description":"Long beans cooked in black bean sauce.","tags":["vegetarian","main course"]},
+        {"name":"Hunan vegetable with dry red chilly","short_description":"Hunan veg","premium_description":"Vegetables cooked in Hunan style with red chilies.","tags":["vegetarian","main course","spicy"]},
+        {"name":"Hong kong tofu with vegetable","short_description":"Tofu veg","premium_description":"Tofu cooked with vegetables in Hong Kong style.","tags":["vegetarian","main course"]},
+        {"name":"Phad phak rum it","short_description":"Thai veg","premium_description":"Thai-style stir-fried vegetables.","tags":["vegetarian","main course"]},
+        {"name":"Sayur lodeh","short_description":"Vegetable curry","premium_description":"Indonesian vegetable curry with coconut base.","tags":["vegetarian","main course"]},
+        {"name":"Vegetable Burmish curry","short_description":"Burmese curry","premium_description":"Vegetables cooked in Burmese-style curry.","tags":["vegetarian","main course"]},
+        {"name":"Vegetable in black pepper sauce","short_description":"Pepper veg","premium_description":"Vegetables cooked in black pepper sauce.","tags":["vegetarian","main course"]},
+        {"name":"Malak vegetable","short_description":"Veg curry","premium_description":"Vegetables cooked in aromatic spices.","tags":["vegetarian","main course"]},
+        {"name":"Pumpkin with vegetable in red curry","short_description":"Pumpkin curry","premium_description":"Pumpkin cooked with vegetables in red curry.","tags":["vegetarian","main course"]},
+        {"name":"Stir Fried Vegetables","short_description":"Stir fry veg","premium_description":"Assorted vegetables stir-fried lightly.","tags":["vegetarian","main course"]},
+        {"name":"Braised Assorted Mushroom","short_description":"Mushroom dish","premium_description":"Mushrooms braised in a flavorful sauce.","tags":["vegetarian","main course"]},
+        {"name":"Assorted Vegetables In Miso Sauce","short_description":"Miso veg","premium_description":"Vegetables cooked in Japanese miso sauce.","tags":["vegetarian","main course"]},
+        {"name":"Twin Mushroom in hot garlic sauce","short_description":"Mushroom garlic","premium_description":"Two varieties of mushrooms cooked in hot garlic sauce.","tags":["vegetarian","main course"]},
+        {"name":"Shitake mushroom with pok choy in soya sauce","short_description":"Shiitake veg","premium_description":"Shiitake mushrooms with bok choy in soy sauce.","tags":["vegetarian","main course"]},
+        {"name":"Mixed vegetable in chilli honey sauce","short_description":"Honey chili veg","premium_description":"Vegetables tossed in sweet and spicy chili honey sauce.","tags":["vegetarian","main course"]}
+      ]
+    }
+  ]
+}

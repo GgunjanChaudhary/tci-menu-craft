@@ -1,0 +1,64 @@
+{
+  "category": "Main Course Non Vegetarian Chicken",
+  "cuisines": [
+    {
+      "name": "Indian",
+      "dishes": [
+        {"name":"Bhuna murgh aur palak","short_description":"Chicken spinach curry","premium_description":"Chicken cooked with spinach in a rich and spiced bhuna style gravy.","tags":["non-vegetarian","chicken","main course","indian"]},
+        {"name":"Dhania murg","short_description":"Coriander chicken","premium_description":"Chicken cooked with fresh coriander for a vibrant and aromatic flavor.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Dhoowan murg","short_description":"Smoked chicken","premium_description":"Chicken infused with smoky flavors and cooked in a rich gravy.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Chicken korma","short_description":"Chicken korma","premium_description":"Chicken simmered in a creamy and mildly spiced Mughlai gravy.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Murgh sweta","short_description":"White chicken curry","premium_description":"Chicken cooked in a creamy white gravy with subtle spices.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Murgh kali mirch","short_description":"Pepper chicken","premium_description":"Chicken cooked with black pepper and spices for a bold flavor.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Murgh tikka butter masala","short_description":"Tikka masala","premium_description":"Grilled chicken tikka cooked in a rich butter tomato gravy.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Methi aur palak wala murgh","short_description":"Chicken greens","premium_description":"Chicken cooked with fenugreek and spinach for a flavorful dish.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Butter chicken","short_description":"Butter chicken","premium_description":"Classic chicken cooked in a rich tomato butter gravy with cream.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Murgh khas korma","short_description":"Special korma","premium_description":"Chicken prepared in a rich and royal korma gravy.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Murgh makhani Kesari","short_description":"Kesari chicken","premium_description":"Chicken cooked in a saffron-infused makhani gravy.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Murgh achari","short_description":"Pickled chicken","premium_description":"Chicken cooked with tangy pickling spices for a bold flavor.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Palak murgh","short_description":"Spinach chicken","premium_description":"Chicken cooked in a smooth spinach gravy.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Murgh dahiwala","short_description":"Yogurt chicken","premium_description":"Chicken cooked in a yogurt-based gravy with spices.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Methi murg","short_description":"Fenugreek chicken","premium_description":"Chicken cooked with fenugreek leaves for a unique flavor.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Kadhai chicken","short_description":"Kadhai chicken","premium_description":"Chicken cooked in a kadhai with spices, onions, and peppers.","tags":["non-vegetarian","chicken","main course"]}
+      ]
+    },
+    {
+      "name": "Continental",
+      "dishes": [
+        {"name":"Grilled chicken breast with red wine réduction & cheese","short_description":"Grilled chicken","premium_description":"Chicken breast grilled and served with red wine reduction and cheese.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Dice chicken, asian mushroom, black bean sauce","short_description":"Chicken mushroom","premium_description":"Diced chicken cooked with mushrooms in black bean sauce.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Roast chicken, steamed vegetable & red wine jus","short_description":"Roast chicken","premium_description":"Roasted chicken served with vegetables and red wine jus.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Harissa spiced chicken breast, roasted baby potatoes and Natural jus","short_description":"Harissa chicken","premium_description":"Chicken breast spiced with harissa served with roasted potatoes.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Cajun spiced chicken breast with tomates pesto cous and red wine jus","short_description":"Cajun chicken","premium_description":"Chicken flavored with Cajun spices served with couscous and sauce.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Stuffted chicken breast, fricasse of orecchiette & mushroom","short_description":"Stuffed chicken","premium_description":"Stuffed chicken breast served with mushroom and pasta.","tags":["non-vegetarian","chicken","main course"]}
+      ]
+    },
+    {
+      "name": "Oriental",
+      "dishes": [
+        {"name":"Stir fried chicken vegetables in Oyster sauce","short_description":"Chicken oyster","premium_description":"Chicken stir-fried with vegetables in oyster sauce.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Sichuan chicken","short_description":"Sichuan chicken","premium_description":"Chicken cooked in bold Sichuan chili sauce.","tags":["non-vegetarian","chicken","main course","spicy"]},
+        {"name":"Chicken black bean sauce","short_description":"Black bean chicken","premium_description":"Chicken cooked in savory black bean sauce.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Chicken in oyster sauce","short_description":"Oyster chicken","premium_description":"Chicken cooked in oyster sauce with vegetables.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Chili chicken gravy","short_description":"Chili chicken","premium_description":"Chicken cooked in spicy chili gravy.","tags":["non-vegetarian","chicken","main course","spicy"]},
+        {"name":"Malak chicken with slice cucumber","short_description":"Malak chicken","premium_description":"Chicken prepared with spices and served with cucumber slices.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Shredded chicken with snow peas","short_description":"Chicken peas","premium_description":"Shredded chicken cooked with snow peas.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Slice chicken with bell peper in chilli bean suace","short_description":"Chicken chili bean","premium_description":"Chicken slices cooked with bell peppers in chili bean sauce.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Chicken with cash net and carrot","short_description":"Chicken veg","premium_description":"Chicken cooked with vegetables and spices.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Chicken with spinach in chilly oyster sauce","short_description":"Spinach chicken","premium_description":"Chicken cooked with spinach in chili oyster sauce.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Chicken malayasian curry with hard root vegetable","short_description":"Malaysian curry","premium_description":"Chicken cooked in Malaysian curry with root vegetables.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"A yam nanoya with star anis and cinnamon stick","short_description":"Spiced chicken","premium_description":"Chicken cooked with star anise and cinnamon for aromatic flavor.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Chicken penag curry","short_description":"Penang curry","premium_description":"Chicken cooked in Thai Penang curry.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Sliced Chicken With Hot Garlic Sauce","short_description":"Garlic chicken","premium_description":"Chicken cooked in hot garlic sauce.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Chicken Cashew nut Thai Style","short_description":"Cashew chicken","premium_description":"Thai-style chicken cooked with cashew nuts.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Diced Chicken In Black Bean Sauce","short_description":"Black bean chicken","premium_description":"Diced chicken cooked in black bean sauce.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Diced Chicken In Hot Bean Sauce","short_description":"Bean sauce chicken","premium_description":"Chicken cooked in hot bean sauce.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Basil And Bamboo Shoot Chicken","short_description":"Basil chicken","premium_description":"Chicken cooked with basil and bamboo shoots.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Diced Chicken In Hot Garlic Sauce","short_description":"Garlic chicken","premium_description":"Chicken cooked in spicy garlic sauce.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Sweet & Sour Chicken","short_description":"Sweet sour chicken","premium_description":"Chicken cooked in sweet and sour sauce.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Chicken Chilly Oyster","short_description":"Oyster chili chicken","premium_description":"Chicken cooked in chili oyster sauce.","tags":["non-vegetarian","chicken","main course"]},
+        {"name":"Shredded Chicken With red and green peppers","short_description":"Chicken peppers","premium_description":"Shredded chicken cooked with bell peppers.","tags":["non-vegetarian","chicken","main course"]}
+      ]
+    }
+  ]
+}

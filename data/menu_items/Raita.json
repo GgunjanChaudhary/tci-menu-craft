@@ -1,0 +1,64 @@
+{
+  "category": "Yoghurts",
+  "cuisines": [
+    {
+      "name": "Indian",
+      "dishes": [
+        {
+          "name": "Cucumber raita",
+          "short_description": "Cucumber yogurt",
+          "premium_description": "A cooling yogurt preparation blended with fresh cucumber and mild spices for a refreshing accompaniment.",
+          "tags": ["yoghurt","vegetarian","indian","side"]
+        },
+        {
+          "name": "Mixed fruit raita",
+          "short_description": "Fruit yogurt",
+          "premium_description": "A delightful mix of seasonal fruits folded into creamy yogurt, offering a sweet and refreshing taste.",
+          "tags": ["yoghurt","vegetarian","indian","side"]
+        },
+        {
+          "name": "Boondi raita",
+          "short_description": "Boondi yogurt",
+          "premium_description": "Crispy gram flour pearls soaked in seasoned yogurt, delivering a balance of texture and flavor.",
+          "tags": ["yoghurt","vegetarian","indian","side"]
+        },
+        {
+          "name": "Mix raita",
+          "short_description": "Mixed raita",
+          "premium_description": "A combination of vegetables and spices blended into yogurt for a wholesome accompaniment.",
+          "tags": ["yoghurt","vegetarian","indian","side"]
+        },
+        {
+          "name": "Mint pineapple raita",
+          "short_description": "Pineapple raita",
+          "premium_description": "A refreshing yogurt mix with pineapple and mint, offering a sweet and cooling contrast.",
+          "tags": ["yoghurt","vegetarian","indian","side"]
+        },
+        {
+          "name": "Pudina raita",
+          "short_description": "Mint yogurt",
+          "premium_description": "Yogurt infused with fresh mint leaves for a refreshing and aromatic flavor.",
+          "tags": ["yoghurt","vegetarian","indian","side"]
+        },
+        {
+          "name": "Jeera raita",
+          "short_description": "Cumin yogurt",
+          "premium_description": "Yogurt flavored with roasted cumin, offering a subtle earthy taste.",
+          "tags": ["yoghurt","vegetarian","indian","side"]
+        },
+        {
+          "name": "Onion & chili raita",
+          "short_description": "Onion raita",
+          "premium_description": "A tangy yogurt preparation with onion and green chili for a slightly spicy kick.",
+          "tags": ["yoghurt","vegetarian","indian","side"]
+        },
+        {
+          "name": "Tomato raita",
+          "short_description": "Tomato yogurt",
+          "premium_description": "Fresh tomatoes blended with yogurt and spices for a light and tangy accompaniment.",
+          "tags": ["yoghurt","vegetarian","indian","side"]
+        }
+      ]
+    }
+  ]
+}

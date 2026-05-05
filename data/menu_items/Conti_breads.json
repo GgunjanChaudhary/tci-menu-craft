@@ -1,0 +1,124 @@
+{
+  "category": "Continental Breads",
+  "cuisines": [
+    {
+      "name": "Continental",
+      "dishes": [
+        {
+          "name": "Soft roll",
+          "short_description": "Soft bread roll",
+          "premium_description": "Light and fluffy bread rolls baked to a soft texture, perfect as an accompaniment.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Hard roll",
+          "short_description": "Crusty roll",
+          "premium_description": "Crisp crusted rolls with a firm exterior and soft interior.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Focaccia",
+          "short_description": "Herb bread",
+          "premium_description": "Italian flatbread infused with olive oil and herbs, offering a soft and aromatic texture.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Rye bread",
+          "short_description": "Rye bread",
+          "premium_description": "Dense and flavorful bread made with rye flour, offering a distinct taste.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Masala bread",
+          "short_description": "Spiced bread",
+          "premium_description": "Bread infused with Indian spices, offering a unique fusion flavor.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Multi grain bread",
+          "short_description": "Multigrain bread",
+          "premium_description": "Nutritious bread made with a blend of grains and seeds.",
+          "tags": ["bread","vegetarian","healthy"]
+        },
+        {
+          "name": "French loaf",
+          "short_description": "French bread",
+          "premium_description": "Classic French loaf with a crisp crust and soft interior.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Pesto and onion roll",
+          "short_description": "Pesto roll",
+          "premium_description": "Soft rolls flavored with pesto and caramelized onions.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Garlic and cheese bread",
+          "short_description": "Garlic bread",
+          "premium_description": "Toasted bread topped with garlic butter and melted cheese.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Bagels",
+          "short_description": "Bagels",
+          "premium_description": "Dense and chewy bread rings traditionally baked and boiled.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Pita bread",
+          "short_description": "Pita",
+          "premium_description": "Soft Middle Eastern flatbread with a pocket, perfect for stuffing.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Grissini",
+          "short_description": "Breadsticks",
+          "premium_description": "Thin and crispy Italian breadsticks, lightly seasoned.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Lavache",
+          "short_description": "Lavash bread",
+          "premium_description": "Thin, soft flatbread traditionally baked in Middle Eastern cuisine.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Olive bread",
+          "short_description": "Olive bread",
+          "premium_description": "Bread infused with olives, offering a savory and rich flavor.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Chiabatta",
+          "short_description": "Ciabatta bread",
+          "premium_description": "Italian white bread with a crisp crust and airy interior.",
+          "tags": ["bread","vegetarian"]
+        },
+        {
+          "name": "Sun flower seed bread",
+          "short_description": "Seed bread",
+          "premium_description": "Nutty bread enriched with sunflower seeds for added texture and flavor.",
+          "tags": ["bread","vegetarian","healthy"]
+        },
+        {
+          "name": "Whole wheat rolls",
+          "short_description": "Whole wheat rolls",
+          "premium_description": "Soft rolls made with whole wheat flour, offering a wholesome taste.",
+          "tags": ["bread","vegetarian","healthy"]
+        },
+        {
+          "name": "High fiber bread",
+          "short_description": "Fiber bread",
+          "premium_description": "Bread rich in fiber, designed for a nutritious and healthy option.",
+          "tags": ["bread","vegetarian","healthy"]
+        },
+        {
+          "name": "Oat bread",
+          "short_description": "Oat bread",
+          "premium_description": "Soft bread made with oats, offering a mild and wholesome flavor.",
+          "tags": ["bread","vegetarian","healthy"]
+        }
+      ]
+    }
+  ]
+}

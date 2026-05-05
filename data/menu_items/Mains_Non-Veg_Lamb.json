@@ -1,0 +1,165 @@
+{
+  "category": "Main Course Non Vegetarian Lamb",
+  "cuisines": [
+    {
+      "name": "Indian",
+      "dishes": [
+        {
+          "name": "Laal maas",
+          "short_description": "Spicy lamb curry",
+          "premium_description": "A traditional Rajasthani lamb curry cooked with red chilies and robust spices.",
+          "tags": ["non-vegetarian","lamb","main course","indian","spicy"]
+        },
+        {
+          "name": "Raara gosht",
+          "short_description": "Minced lamb curry",
+          "premium_description": "A rich preparation of lamb cooked with minced meat and aromatic spices.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Mutton dahiwala",
+          "short_description": "Yogurt lamb curry",
+          "premium_description": "Tender lamb cooked in a creamy yogurt-based gravy with balanced spices.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Lamb chop Masala",
+          "short_description": "Lamb chops curry",
+          "premium_description": "Juicy lamb chops cooked in a rich and spiced masala gravy.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Mutton roganjosh",
+          "short_description": "Rogan josh",
+          "premium_description": "Classic Kashmiri lamb curry slow-cooked with aromatic spices.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "gosht dhaniwal korma",
+          "short_description": "Coriander lamb korma",
+          "premium_description": "Lamb cooked in a coriander-infused korma gravy with rich flavors.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Nahari gosht",
+          "short_description": "Nihari",
+          "premium_description": "Slow-cooked lamb stew with deep flavors and aromatic spices.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Kunna gosht",
+          "short_description": "Kunna lamb",
+          "premium_description": "Traditional slow-cooked lamb dish prepared in a sealed pot for rich taste.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Kadai gosht",
+          "short_description": "Kadai lamb",
+          "premium_description": "Lamb cooked with onions, tomatoes, and spices in a kadhai.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Dabba gosht",
+          "short_description": "Slow cooked lamb",
+          "premium_description": "Lamb cooked slowly in a sealed container to enhance flavors.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Namkeen gosht",
+          "short_description": "Salted lamb curry",
+          "premium_description": "A rustic lamb preparation seasoned simply to highlight natural flavors.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        }
+      ]
+    },
+    {
+      "name": "Oriental",
+      "dishes": [
+        {
+          "name": "Stir fried Lamb with star anise in soya sauce",
+          "short_description": "Stir fried lamb",
+          "premium_description": "Lamb stir-fried with star anise and soy sauce for a rich aromatic flavor.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Lamb tomato chilly with bell Pepper",
+          "short_description": "Chili lamb",
+          "premium_description": "Lamb cooked with tomatoes, chilies, and bell peppers.",
+          "tags": ["non-vegetarian","lamb","main course","spicy"]
+        },
+        {
+          "name": "Lamb black peper and vegetable",
+          "short_description": "Pepper lamb",
+          "premium_description": "Lamb tossed with vegetables in a black pepper sauce.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Lamb masallam curry with potato",
+          "short_description": "Lamb curry",
+          "premium_description": "Lamb cooked with potatoes in a rich masallam-style curry.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Slice Lamb in hot garlic sauce",
+          "short_description": "Garlic lamb",
+          "premium_description": "Sliced lamb cooked in spicy hot garlic sauce.",
+          "tags": ["non-vegetarian","lamb","main course","spicy"]
+        },
+        {
+          "name": "Shredded lamb in black bean sauce",
+          "short_description": "Black bean lamb",
+          "premium_description": "Shredded lamb cooked in savory black bean sauce.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Lamb green curry",
+          "short_description": "Green curry lamb",
+          "premium_description": "Lamb cooked in aromatic Thai green curry.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Lamb thai red curry",
+          "short_description": "Red curry lamb",
+          "premium_description": "Lamb simmered in rich Thai red curry with coconut flavors.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Lamb penag curry",
+          "short_description": "Penang lamb",
+          "premium_description": "Lamb cooked in Thai Penang curry with balanced spices.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Lamb in hong Kong style with ginger slice",
+          "short_description": "Ginger lamb",
+          "premium_description": "Lamb cooked Hong Kong style with ginger slices for a fresh aroma.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Sliced Lamb In Chilly Oyster",
+          "short_description": "Oyster lamb",
+          "premium_description": "Lamb cooked in chili oyster sauce for a rich flavor.",
+          "tags": ["non-vegetarian","lamb","main course","spicy"]
+        },
+        {
+          "name": "Lamb Ginger Spring Onion",
+          "short_description": "Ginger lamb",
+          "premium_description": "Lamb sautéed with ginger and spring onions.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Lamb Pepper Sauce",
+          "short_description": "Pepper lamb",
+          "premium_description": "Lamb cooked in a bold pepper sauce with deep flavors.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        },
+        {
+          "name": "Sautéed Sliced Lamb In Beijing Style",
+          "short_description": "Beijing lamb",
+          "premium_description": "Sliced lamb sautéed in classic Beijing-style sauce.",
+          "tags": ["non-vegetarian","lamb","main course"]
+        }
+      ]
+    }
+  ]
+}

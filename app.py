@@ -10,11 +10,11 @@ Flow:
 
 import os
 import base64
-import csv
 import json
 from datetime import date
 import streamlit as st
 from collections import OrderedDict
+import streamlit.components.v1 as components
 
 from config import (
     COMPANY_NAME,
@@ -29,6 +29,9 @@ from parser import parse_grid
 from menu_loader import load_all, get_dishes
 from pdf_generator import generate_pdf
 from suggester import suggest
+from html_generator import generate_menu_html
+from custom_menu_loader import load_menu_items_json, update_master_dish_descriptions
+from tools.render_html_to_pdf import render_html_to_pdf_bytes
 
 # Step 1 controlled options
 OCCASION_OPTIONS = [
@@ -124,7 +127,13 @@ def _init_state():
         "tier": None,
         "preferred_menu_type": None,
         "menu_build_mode": MENU_BUILD_MODES[0],
+        "custom_step": 0,
+        "custom_ordered_sections": [],
         "custom_targets": {},
+        "custom_selections": {},
+        "custom_preview_html": "",
+        "custom_generated_pdf_bytes": None,
+        "custom_generated_pdf_name": None,
         "description_edit_scope": DESCRIPTION_EDIT_SCOPES[0],
 
         # Step 3 — customisation
@@ -161,12 +170,18 @@ def load_samples():
     return load_sample_menus()
 
 
+@st.cache_data
+def load_custom_sections():
+    return load_menu_items_json()
+
+
 if st.session_state.grid_data is None:
     st.session_state.grid_data = load_grid()
 if st.session_state.all_items is None:
     st.session_state.all_items = load_menu_items()
 if st.session_state.sample_menus is None:
     st.session_state.sample_menus = load_samples()
+custom_sections_payload, custom_dish_index = load_custom_sections()
 
 grid = st.session_state.grid_data
 all_items = st.session_state.all_items
@@ -233,6 +248,58 @@ def parse_guest_count(text, fallback=0):
         return int(str(text).strip().replace(",", ""))
     except (ValueError, AttributeError):
         return fallback
+
+
+def _init_custom_targets():
+    if st.session_state.custom_targets:
+        return
+    for section_name in custom_sections_payload.keys():
+        st.session_state.custom_targets[section_name] = {"include": False, "limit": 0}
+        st.session_state.custom_selections[section_name] = {}
+
+
+def _section_completion(section_name):
+    target = st.session_state.custom_targets.get(section_name, {"include": False, "limit": 0})
+    if not target.get("include"):
+        return 0, 0
+    selected = st.session_state.custom_selections.get(section_name, {})
+    count = sum(len(v) for v in selected.values())
+    return count, int(target.get("limit", 0))
+
+
+def _custom_sections_for_preview():
+    preview = []
+    for section_name in st.session_state.custom_ordered_sections:
+        target = st.session_state.custom_targets.get(section_name, {"include": False, "limit": 0})
+        if not target.get("include"):
+            continue
+        cuisines_block = []
+        selected_map = st.session_state.custom_selections.get(section_name, {})
+        for cuisine_name, selected_items in selected_map.items():
+            dishes = []
+            for item in selected_items:
+                desc = item.get("short_description", "")
+                if item.get("description_mode") == "premium":
+                    desc = item.get("premium_description", "") or desc
+                if item.get("description_override"):
+                    desc = item["description_override"]
+                dishes.append({"name": item.get("name", ""), "description": desc})
+            if dishes:
+                cuisines_block.append({"name": cuisine_name, "dishes": dishes})
+        if cuisines_block:
+            preview.append({"name": section_name, "cuisines": cuisines_block})
+    return preview
+
+
+def _persist_master_json_edit(section_name, cuisine_name, dish_name, short_description, premium_description):
+    pointer = custom_dish_index.get((section_name, cuisine_name, dish_name))
+    if not pointer:
+        return False
+    return update_master_dish_descriptions(
+        pointer,
+        short_description=short_description,
+        premium_description=premium_description,
+    )
 
 
 def _available_pick_choose_headers(menu_types_data, all_items_data):
@@ -586,37 +653,6 @@ if st.session_state.step == 1:
     else:
         st.warning("No menu types found in Excel grid.")
 
-    if st.session_state.menu_build_mode == "Create your own menu":
-        st.markdown("---")
-        st.markdown("**Create-your-own headers (Pick & Choose source)**")
-        st.caption(
-            "Set item counts for the headers you want. "
-            "Step 2 will let you choose exact dishes for each selected header."
-        )
-        pick_choose_headers = _available_pick_choose_headers(menu_types, all_items)
-        if not pick_choose_headers:
-            st.warning("No pick-and-choose headers could be resolved from loaded menu items.")
-        else:
-            for section, categories in pick_choose_headers.items():
-                st.markdown(
-                    f'<div class="section-header">{section}</div>',
-                    unsafe_allow_html=True,
-                )
-                count_cols = st.columns(3)
-                for idx, category in enumerate(categories.keys()):
-                    qty_key = f"qty_{section}_{category}"
-                    existing = int(st.session_state.custom_targets.get(qty_key, 0) or 0)
-                    with count_cols[idx % 3]:
-                        qty = st.number_input(
-                            f"{category} (count)",
-                            min_value=0,
-                            max_value=20,
-                            value=existing,
-                            step=1,
-                            key=f"ni_{qty_key}",
-                        )
-                        st.session_state.custom_targets[qty_key] = int(qty)
-
     st.markdown("---")
     col_a, col_b, col_c = st.columns([1, 5, 1])
     with col_c:
@@ -625,12 +661,11 @@ if st.session_state.step == 1:
                 st.error("Please enter the client name before proceeding.")
             elif not st.session_state.preferred_menu_type:
                 st.error("Please select a menu type before proceeding.")
-            elif (
-                st.session_state.menu_build_mode == "Create your own menu"
-                and sum(st.session_state.custom_targets.values()) <= 0
-            ):
-                st.error("Please select at least one header count for create-your-own menu.")
             else:
+                if st.session_state.menu_build_mode == "Create your own menu":
+                    _init_custom_targets()
+                    st.session_state.custom_ordered_sections = list(custom_sections_payload.keys())
+                    st.session_state.custom_step = 1
                 st.session_state.step = 2
                 st.rerun()
 
@@ -641,7 +676,7 @@ if st.session_state.step == 1:
 elif st.session_state.step == 2:
     if st.session_state.menu_build_mode == "Create your own menu":
         st.subheader("Step 2: Create Your Own Menu")
-        st.caption("Pick exact dishes for each selected header from the pick-and-choose source.")
+        st.caption("Multi-step custom builder using JSON master sections.")
 
         preferred_menu_type = st.session_state.preferred_menu_type
         chosen_mt_pricing = menu_types.get(preferred_menu_type, {}).get("pricing", {})
@@ -657,68 +692,202 @@ elif st.session_state.step == 2:
                 index=default_tier_index,
             )
 
-        selections_made = 0
-        for qty_key, qty in st.session_state.custom_targets.items():
-            if int(qty or 0) <= 0:
-                continue
-            _, section, category = qty_key.split("_", 2)
-            dishes = get_dishes(all_items, section, category)
-            if not dishes:
-                continue
+        ordered_sections = st.session_state.custom_ordered_sections or list(custom_sections_payload.keys())
+        total_steps = len(ordered_sections)
+        if not ordered_sections:
+            st.error("No JSON menu sections found in data/menu_items/*.json.")
+        elif st.session_state.custom_step > total_steps:
+            st.markdown("### Preview Custom Menu")
+            preview_sections = _custom_sections_for_preview()
+            if not preview_sections:
+                st.warning("No section items selected yet.")
+            else:
+                for idx, section in enumerate(preview_sections, 1):
+                    cols = st.columns([6, 1])
+                    with cols[0]:
+                        st.markdown(
+                            f'<div class="section-header">{section["name"]}</div>',
+                            unsafe_allow_html=True,
+                        )
+                    with cols[1]:
+                        edit_target = ordered_sections.index(section["name"]) + 1
+                        if st.button("Edit", key=f"edit_section_{idx}", use_container_width=True):
+                            st.session_state.custom_step = edit_target
+                            st.rerun()
+                    for cuisine in section["cuisines"]:
+                        st.markdown(f"**{cuisine['name']}**")
+                        for dish in cuisine["dishes"]:
+                            st.markdown(f"- **{dish['name']}** — *{dish['description']}*")
 
-            st.markdown(
-                f'<div class="subcat-header">{section} → {category} (pick up to {qty})</div>',
-                unsafe_allow_html=True,
+            html_payload = {
+                "client_name": st.session_state.client_name,
+                "event_title": st.session_state.event_title or "Custom Menu",
+                "venue": st.session_state.venue,
+                "event_date": format_event_date(st.session_state.event_date),
+            }
+            html_text = generate_menu_html(html_payload, preview_sections, LOGO_PATH)
+            st.session_state.custom_preview_html = html_text
+            components.html(html_text, height=700, scrolling=True)
+
+            print_html = (
+                "<button onclick=\"window.print()\" "
+                "style=\"padding:8px 14px;border:none;border-radius:6px;background:#6B2737;color:white;cursor:pointer\">Print</button>"
             )
-            sel_key = f"sel_{section}_{category}"
-            dish_names = [d["name"] for d in dishes]
-            dish_map = {d["name"]: d["description"] for d in dishes}
-            current = st.session_state.selections.get(sel_key, [])
-            valid_current = [c for c in current if c in dish_names]
-            selected = st.multiselect(
-                f"Choose {category}",
-                options=dish_names,
-                default=valid_current,
-                max_selections=int(qty),
-                key=f"ms_custom_{sel_key}",
-                label_visibility="collapsed",
-            )
-            st.session_state.selections[sel_key] = selected
-            selections_made += len(selected)
+            components.html(print_html, height=50)
 
-            for dish_name in selected:
-                desc_key = f"desc_{sel_key}_{dish_name}"
-                default_desc = st.session_state.descriptions.get(
-                    desc_key, dish_map.get(dish_name, "")
-                )
-                new_desc = st.text_input(
-                    f"Description for {dish_name}",
-                    value=default_desc,
-                    key=f"ti_custom_{desc_key}",
-                    label_visibility="collapsed",
-                    placeholder=f"Description for {dish_name}",
-                )
-                st.session_state.descriptions[desc_key] = new_desc
-                if (
-                    st.session_state.description_edit_scope == "Master data (backend)"
-                    and new_desc != dish_map.get(dish_name, "")
-                ):
-                    maybe_persist_master_description(section, category, dish_name, new_desc)
-
-        st.markdown("---")
-        col_a, col_b, col_c = st.columns([1, 5, 1])
-        with col_a:
-            if st.button("← Back", use_container_width=True):
-                st.session_state.step = 1
-                st.rerun()
-        with col_c:
-            if st.button("Preview & Export →", type="primary", use_container_width=True):
-                if selections_made <= 0:
-                    st.error("Please select at least one dish before continuing.")
-                else:
-                    st.session_state.menu_type = preferred_menu_type
-                    st.session_state.step = 4
+            c1, c2, c3 = st.columns([1, 2, 2])
+            with c1:
+                if st.button("← Back to sections", use_container_width=True):
+                    st.session_state.custom_step = total_steps
                     st.rerun()
+            with c2:
+                try:
+                    pdf_bytes = render_html_to_pdf_bytes(html_text)
+                except Exception:
+                    pdf_bytes = None
+                if pdf_bytes:
+                    st.download_button(
+                        "Download PDF",
+                        data=pdf_bytes,
+                        file_name="custom_menu.pdf",
+                        mime="application/pdf",
+                        use_container_width=True,
+                    )
+                else:
+                    st.info("WeasyPrint unavailable. Use Generate PDF fallback below.")
+            with c3:
+                if st.button("Generate PDF (Fallback)", use_container_width=True):
+                    mapped = OrderedDict()
+                    for section in preview_sections:
+                        subcats = OrderedDict()
+                        for cuisine in section["cuisines"]:
+                            subcats[cuisine["name"]] = cuisine["dishes"]
+                        mapped[section["name"]] = subcats
+                    tier_info = chosen_mt_pricing.get(st.session_state.tier, {"price": 0, "mg": 0})
+                    path = generate_pdf(
+                        client_name=st.session_state.client_name,
+                        event_date=format_event_date(st.session_state.event_date),
+                        venue=st.session_state.venue,
+                        menu_type_name=st.session_state.preferred_menu_type,
+                        tier_name=st.session_state.tier,
+                        tier_info=tier_info,
+                        selections=mapped,
+                        event_title=st.session_state.event_title,
+                        num_guests=parse_guest_count(st.session_state.num_guests),
+                        addons=[],
+                    )
+                    with open(path, "rb") as f:
+                        st.session_state.custom_generated_pdf_bytes = f.read()
+                    st.session_state.custom_generated_pdf_name = os.path.basename(path)
+            if st.session_state.custom_generated_pdf_bytes:
+                st.download_button(
+                    "Download Fallback PDF",
+                    data=st.session_state.custom_generated_pdf_bytes,
+                    file_name=st.session_state.custom_generated_pdf_name or "custom_menu.pdf",
+                    mime="application/pdf",
+                )
+        else:
+            current_idx = st.session_state.custom_step - 1
+            section_name = ordered_sections[current_idx]
+            section_cuisines = custom_sections_payload.get(section_name, [])
+
+            st.markdown(f"### Section {st.session_state.custom_step}/{total_steps}: {section_name}")
+            target = st.session_state.custom_targets.get(section_name, {"include": False, "limit": 0})
+            include = st.radio(
+                f"Include {section_name}?",
+                ["No", "Yes"],
+                horizontal=True,
+                index=1 if target.get("include") else 0,
+                key=f"include_{section_name}",
+            )
+            target["include"] = include == "Yes"
+            if target["include"]:
+                target["limit"] = st.number_input(
+                    "Total items to select",
+                    min_value=1,
+                    max_value=30,
+                    value=max(1, int(target.get("limit") or 1)),
+                    step=1,
+                    key=f"limit_{section_name}",
+                )
+                selected_total = 0
+                section_selected = st.session_state.custom_selections.setdefault(section_name, {})
+                for cuisine in section_cuisines:
+                    cuisine_name = cuisine.get("name", "General")
+                    dishes = cuisine.get("dishes", [])
+                    options = [d.get("name", "") for d in dishes if d.get("name")]
+                    existing_rows = section_selected.get(cuisine_name, [])
+                    existing_names = [d.get("name", "") for d in existing_rows]
+                    selected_names = st.multiselect(
+                        f"{cuisine_name} dishes",
+                        options=options,
+                        default=[n for n in existing_names if n in options],
+                        key=f"custom_pick_{section_name}_{cuisine_name}",
+                    )
+                    selected_total += len(selected_names)
+                    selected_rows = []
+                    dish_lookup = {d["name"]: d for d in dishes if d.get("name")}
+                    for dish_name in selected_names:
+                        base = dish_lookup[dish_name]
+                        existing = next((x for x in existing_rows if x.get("name") == dish_name), {})
+                        desc_mode = st.radio(
+                            f"{dish_name}: description",
+                            ["short", "premium"],
+                            horizontal=True,
+                            index=0 if existing.get("description_mode", "short") == "short" else 1,
+                            key=f"desc_mode_{section_name}_{cuisine_name}_{dish_name}",
+                        )
+                        short_desc = base.get("short_description", "")
+                        premium_desc = base.get("premium_description", "")
+                        if desc_mode == "premium":
+                            default_text = existing.get("description_override") or premium_desc
+                        else:
+                            default_text = existing.get("description_override") or short_desc
+                        with st.expander(f"Edit description for {dish_name}", expanded=False):
+                            override = st.text_area(
+                                "Description",
+                                value=default_text,
+                                key=f"desc_override_{section_name}_{cuisine_name}_{dish_name}",
+                            )
+                            if (
+                                st.session_state.description_edit_scope == "Master data (backend)"
+                                and override != default_text
+                            ):
+                                short_update = override if desc_mode == "short" else short_desc
+                                premium_update = override if desc_mode == "premium" else premium_desc
+                                _persist_master_json_edit(
+                                    section_name, cuisine_name, dish_name, short_update, premium_update
+                                )
+                        selected_rows.append({
+                            "name": dish_name,
+                            "short_description": short_desc,
+                            "premium_description": premium_desc,
+                            "description_mode": desc_mode,
+                            "description_override": override if override != (premium_desc if desc_mode == "premium" else short_desc) else "",
+                        })
+                    section_selected[cuisine_name] = selected_rows
+                if selected_total > int(target["limit"]):
+                    st.error(f"Selected {selected_total} items, limit is {int(target['limit'])}.")
+                st.caption(f"Counter: {selected_total}/{int(target['limit'])}")
+
+            st.session_state.custom_targets[section_name] = target
+
+            c1, c2 = st.columns([1, 1])
+            with c1:
+                if st.button("← Back", use_container_width=True):
+                    if st.session_state.custom_step <= 1:
+                        st.session_state.step = 1
+                    else:
+                        st.session_state.custom_step -= 1
+                    st.rerun()
+            with c2:
+                if st.button("Next →", type="primary", use_container_width=True):
+                    count, limit = _section_completion(section_name)
+                    if target.get("include") and count > limit:
+                        st.error("Reduce selection count to continue.")
+                    else:
+                        st.session_state.custom_step += 1
+                        st.rerun()
     else:
         st.subheader("Step 2: Suggested Menus")
         st.caption("Top matches from the sample-menu pool. Pick the closest one — you'll be able to tweak it on the next screen.")
