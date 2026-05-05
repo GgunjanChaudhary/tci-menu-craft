@@ -10,11 +10,21 @@ Flow:
 
 import os
 import base64
+import csv
+import json
 from datetime import date
 import streamlit as st
 from collections import OrderedDict
 
-from config import COMPANY_NAME, LOGO_PATH, COLOR_PRIMARY, COLOR_ACCENT
+from config import (
+    COMPANY_NAME,
+    LOGO_PATH,
+    COLOR_PRIMARY,
+    COLOR_ACCENT,
+    MENU_ITEMS_DIR,
+    CATEGORY_FILE_MAP,
+    SECTION_CATEGORY_FILE_MAP,
+)
 from parser import parse_grid
 from menu_loader import load_all, get_dishes
 from pdf_generator import generate_pdf
@@ -33,6 +43,9 @@ OCCASION_OPTIONS = [
     "Conference",
     "Festive Celebration",
 ]
+MENU_BUILD_MODES = ["Use suggested menu", "Create your own menu"]
+DESCRIPTION_EDIT_SCOPES = ["This menu only", "Master data (backend)"]
+MASTER_JSON_PATH = os.path.join("data", "pick_choose_menu.json")
 
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -110,6 +123,9 @@ def _init_state():
         "menu_type": None,
         "tier": None,
         "preferred_menu_type": None,
+        "menu_build_mode": MENU_BUILD_MODES[0],
+        "custom_targets": {},
+        "description_edit_scope": DESCRIPTION_EDIT_SCOPES[0],
 
         # Step 3 — customisation
         "selections": {},
@@ -219,6 +235,158 @@ def parse_guest_count(text, fallback=0):
         return fallback
 
 
+def _available_pick_choose_headers(menu_types_data, all_items_data):
+    """Return section->categories that have at least one dish loaded."""
+    headers = OrderedDict()
+    for _mt_name, mt_data in menu_types_data.items():
+        for section, cats in mt_data.get("sections", {}).items():
+            for category in cats.keys():
+                dishes = get_dishes(all_items_data, section, category)
+                if not dishes:
+                    continue
+                headers.setdefault(section, OrderedDict())
+                headers[section][category] = True
+    return headers
+
+
+def _resolve_category_csv_file(section, category):
+    if (section, category) in SECTION_CATEGORY_FILE_MAP:
+        return SECTION_CATEGORY_FILE_MAP[(section, category)]
+    return CATEGORY_FILE_MAP.get(category)
+
+
+def _update_csv_master_description(section, category, dish_name, description):
+    file_stub = _resolve_category_csv_file(section, category)
+    if not file_stub:
+        return False
+    csv_path = os.path.join(MENU_ITEMS_DIR, f"{file_stub}.csv")
+    if not os.path.exists(csv_path):
+        return False
+
+    changed = False
+    rows = []
+    with open(csv_path, "r", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        fieldnames = list(reader.fieldnames or ["name", "description"])
+        if "name" not in fieldnames:
+            return False
+        if "description" not in fieldnames:
+            fieldnames.append("description")
+        for row in reader:
+            name = (row.get("name") or "").strip()
+            if name == dish_name:
+                row["description"] = description
+                changed = True
+            rows.append(row)
+
+    if not changed:
+        return False
+
+    with open(csv_path, "w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+    return True
+
+
+def _update_json_master_description(section, category, dish_name, description):
+    if not os.path.exists(MASTER_JSON_PATH):
+        return False
+    try:
+        with open(MASTER_JSON_PATH, "r", encoding="utf-8") as f:
+            payload = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return False
+
+    changed = False
+    section_block = payload.get("sections", {}).get(section, {})
+    for dish in section_block.get(category, []):
+        if dish.get("name") == dish_name:
+            dish["short_description"] = description
+            changed = True
+
+    if not changed:
+        return False
+
+    with open(MASTER_JSON_PATH, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2, ensure_ascii=False)
+    return True
+
+
+def maybe_persist_master_description(section, category, dish_name, description):
+    csv_changed = _update_csv_master_description(section, category, dish_name, description)
+    json_changed = _update_json_master_description(section, category, dish_name, description)
+    return csv_changed or json_changed
+
+
+def _normalize_dish_name(name):
+    return " ".join((name or "").strip().lower().split())
+
+
+def load_master_menu_json():
+    if not os.path.exists(MASTER_JSON_PATH):
+        return None
+    try:
+        with open(MASTER_JSON_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def _menu_json_stats(payload):
+    sections = payload.get("sections", {}) if isinstance(payload, dict) else {}
+    section_count = len(sections)
+    category_count = 0
+    dish_count = 0
+    duplicates = []
+
+    for section, categories in sections.items():
+        category_count += len(categories)
+        for category, dishes in categories.items():
+            seen = set()
+            for dish in dishes:
+                dish_count += 1
+                norm = _normalize_dish_name(dish.get("name", ""))
+                if not norm:
+                    continue
+                if norm in seen:
+                    duplicates.append((section, category, dish.get("name", "")))
+                else:
+                    seen.add(norm)
+
+    return {
+        "section_count": section_count,
+        "category_count": category_count,
+        "dish_count": dish_count,
+        "duplicates": duplicates,
+    }
+
+
+def dedupe_master_menu_json(payload):
+    """De-duplicate dishes by normalized name within each category."""
+    sections = payload.get("sections", {})
+    removed = 0
+    for _section, categories in sections.items():
+        for _category, dishes in categories.items():
+            uniq = {}
+            for dish in dishes:
+                key = _normalize_dish_name(dish.get("name", ""))
+                if not key:
+                    continue
+                if key not in uniq:
+                    uniq[key] = dish
+                    continue
+                # Keep richer descriptions when duplicates are found.
+                existing = uniq[key]
+                if len(dish.get("premium_description", "")) > len(existing.get("premium_description", "")):
+                    existing["premium_description"] = dish.get("premium_description", existing.get("premium_description", ""))
+                if len(dish.get("short_description", "")) > len(existing.get("short_description", "")):
+                    existing["short_description"] = dish.get("short_description", existing.get("short_description", ""))
+                removed += 1
+            categories[_category] = list(uniq.values())
+    return payload, removed
+
+
 def apply_sample_menu(sample):
     """Pre-fill st.session_state.selections from a sample menu dict."""
     st.session_state.selected_sample_id = sample["id"]
@@ -325,6 +493,63 @@ if st.session_state.step == 1:
                 height=100,
             )
 
+    st.markdown("---")
+    st.markdown("**How do you want to build this menu?**")
+    mode_index = (
+        MENU_BUILD_MODES.index(st.session_state.menu_build_mode)
+        if st.session_state.menu_build_mode in MENU_BUILD_MODES else 0
+    )
+    st.session_state.menu_build_mode = st.radio(
+        "Build mode",
+        MENU_BUILD_MODES,
+        horizontal=True,
+        index=mode_index,
+        label_visibility="collapsed",
+    )
+    scope_index = (
+        DESCRIPTION_EDIT_SCOPES.index(st.session_state.description_edit_scope)
+        if st.session_state.description_edit_scope in DESCRIPTION_EDIT_SCOPES else 0
+    )
+    st.session_state.description_edit_scope = st.radio(
+        "Description edit target",
+        DESCRIPTION_EDIT_SCOPES,
+        horizontal=True,
+        index=scope_index,
+        help="Choose whether description edits apply only to this menu or update backend master data.",
+    )
+
+    with st.expander("Pick & Choose JSON review utility", expanded=False):
+        payload = load_master_menu_json()
+        if not payload:
+            st.info(
+                "Master JSON not found yet. Generate it first using "
+                "`python tools/build_pick_choose_json.py --pdf <path-to-pdf>`."
+            )
+        else:
+            stats = _menu_json_stats(payload)
+            c1, c2, c3 = st.columns(3)
+            with c1:
+                st.metric("Sections", stats["section_count"])
+            with c2:
+                st.metric("Categories", stats["category_count"])
+            with c3:
+                st.metric("Dishes", stats["dish_count"])
+
+            dup_count = len(stats["duplicates"])
+            if dup_count:
+                st.warning(f"Found {dup_count} duplicate dish entries within categories.")
+                preview = stats["duplicates"][:20]
+                st.caption("Sample duplicates (first 20):")
+                for section, category, dish_name in preview:
+                    st.markdown(f"- `{section}` / `{category}` -> {dish_name}")
+                if st.button("De-duplicate master JSON now", key="dedupe_master_json"):
+                    cleaned, removed = dedupe_master_menu_json(payload)
+                    with open(MASTER_JSON_PATH, "w", encoding="utf-8") as f:
+                        json.dump(cleaned, f, indent=2, ensure_ascii=False)
+                    st.success(f"Removed {removed} duplicates and saved `{MASTER_JSON_PATH}`.")
+            else:
+                st.success("No within-category duplicates detected.")
+
     # ── Special notes ─────────────────────────────────────────────────────
     st.session_state.special_notes = st.text_area(
         "Special notes / allergens / preferences (optional)",
@@ -361,6 +586,37 @@ if st.session_state.step == 1:
     else:
         st.warning("No menu types found in Excel grid.")
 
+    if st.session_state.menu_build_mode == "Create your own menu":
+        st.markdown("---")
+        st.markdown("**Create-your-own headers (Pick & Choose source)**")
+        st.caption(
+            "Set item counts for the headers you want. "
+            "Step 2 will let you choose exact dishes for each selected header."
+        )
+        pick_choose_headers = _available_pick_choose_headers(menu_types, all_items)
+        if not pick_choose_headers:
+            st.warning("No pick-and-choose headers could be resolved from loaded menu items.")
+        else:
+            for section, categories in pick_choose_headers.items():
+                st.markdown(
+                    f'<div class="section-header">{section}</div>',
+                    unsafe_allow_html=True,
+                )
+                count_cols = st.columns(3)
+                for idx, category in enumerate(categories.keys()):
+                    qty_key = f"qty_{section}_{category}"
+                    existing = int(st.session_state.custom_targets.get(qty_key, 0) or 0)
+                    with count_cols[idx % 3]:
+                        qty = st.number_input(
+                            f"{category} (count)",
+                            min_value=0,
+                            max_value=20,
+                            value=existing,
+                            step=1,
+                            key=f"ni_{qty_key}",
+                        )
+                        st.session_state.custom_targets[qty_key] = int(qty)
+
     st.markdown("---")
     col_a, col_b, col_c = st.columns([1, 5, 1])
     with col_c:
@@ -369,6 +625,11 @@ if st.session_state.step == 1:
                 st.error("Please enter the client name before proceeding.")
             elif not st.session_state.preferred_menu_type:
                 st.error("Please select a menu type before proceeding.")
+            elif (
+                st.session_state.menu_build_mode == "Create your own menu"
+                and sum(st.session_state.custom_targets.values()) <= 0
+            ):
+                st.error("Please select at least one header count for create-your-own menu.")
             else:
                 st.session_state.step = 2
                 st.rerun()
@@ -378,92 +639,173 @@ if st.session_state.step == 1:
 # STEP 2 — Suggested Menus
 # ════════════════════════════════════════════════════════════════════════════
 elif st.session_state.step == 2:
-    st.subheader("Step 2: Suggested Menus")
-    st.caption("Top matches from the sample-menu pool. Pick the closest one — you'll be able to tweak it on the next screen.")
+    if st.session_state.menu_build_mode == "Create your own menu":
+        st.subheader("Step 2: Create Your Own Menu")
+        st.caption("Pick exact dishes for each selected header from the pick-and-choose source.")
 
-    requirements = {
-        "diet": st.session_state.diet,
-        "occasion": st.session_state.occasion,
-        "meal": st.session_state.meal,
-        "num_guests": parse_guest_count(st.session_state.num_guests),
-    }
-    preferred_menu_type = st.session_state.preferred_menu_type
-    scored = suggest(requirements, top_n=None)
-    suggestions = [
-        (menu, score, reasons)
-        for menu, score, reasons in scored
-        if menu.get("menu_type") == preferred_menu_type
-    ][:3]
-
-    st.caption(f"Showing suggestions for selected menu type: **{preferred_menu_type}**")
-
-    if not suggestions:
-        st.warning(
-            "No sample menus found for the selected menu type. "
-            "You can still continue and edit selections manually."
-        )
-    else:
-        for idx, (menu, score, reasons) in enumerate(suggestions):
-            mt_pricing = menu_types.get(menu["menu_type"], {}).get("pricing", {})
-            tier_info = mt_pricing.get(menu["tier"], {})
-            price = tier_info.get("price", "?")
-            mg = tier_info.get("mg", "?")
-
-            badge = "TOP MATCH" if idx == 0 else f"OPTION {idx + 1}"
-            st.markdown(
-                f'<div class="suggest-card">'
-                f'<div style="color:{COLOR_ACCENT};font-weight:bold;font-size:11px;letter-spacing:1px">'
-                f'{badge}  ·  match score {score:.0f}</div>'
-                f'<h3 style="margin:4px 0 6px 0;color:{COLOR_PRIMARY}">{menu["name"]}</h3>'
-                f'<div style="color:#555;margin-bottom:8px">{menu.get("description", "")}</div>'
-                f'<div style="margin-bottom:6px">'
-                + "".join(f'<span class="badge">{r}</span>' for r in reasons)
-                + f'</div>'
-                f'<div style="font-size:12px;color:#666">'
-                f'<b>Base:</b> {menu["menu_type"]} — {menu["tier"]} tier '
-                f'·  ₹{price}/head  ·  MG {mg} guests'
-                f'</div>'
-                f'</div>',
-                unsafe_allow_html=True,
+        preferred_menu_type = st.session_state.preferred_menu_type
+        chosen_mt_pricing = menu_types.get(preferred_menu_type, {}).get("pricing", {})
+        tier_options = list(chosen_mt_pricing.keys())
+        if tier_options:
+            default_tier_index = (
+                tier_options.index(st.session_state.tier)
+                if st.session_state.tier in tier_options else 0
+            )
+            st.session_state.tier = st.selectbox(
+                "Choose price tier for this menu type",
+                tier_options,
+                index=default_tier_index,
             )
 
-            cols = st.columns([6, 2])
-            with cols[1]:
-                if st.button(f"Use this menu", key=f"pick_{menu['id']}", type="primary", use_container_width=True):
-                    apply_sample_menu(menu)
-                    st.session_state.step = 3
+        selections_made = 0
+        for qty_key, qty in st.session_state.custom_targets.items():
+            if int(qty or 0) <= 0:
+                continue
+            _, section, category = qty_key.split("_", 2)
+            dishes = get_dishes(all_items, section, category)
+            if not dishes:
+                continue
+
+            st.markdown(
+                f'<div class="subcat-header">{section} → {category} (pick up to {qty})</div>',
+                unsafe_allow_html=True,
+            )
+            sel_key = f"sel_{section}_{category}"
+            dish_names = [d["name"] for d in dishes]
+            dish_map = {d["name"]: d["description"] for d in dishes}
+            current = st.session_state.selections.get(sel_key, [])
+            valid_current = [c for c in current if c in dish_names]
+            selected = st.multiselect(
+                f"Choose {category}",
+                options=dish_names,
+                default=valid_current,
+                max_selections=int(qty),
+                key=f"ms_custom_{sel_key}",
+                label_visibility="collapsed",
+            )
+            st.session_state.selections[sel_key] = selected
+            selections_made += len(selected)
+
+            for dish_name in selected:
+                desc_key = f"desc_{sel_key}_{dish_name}"
+                default_desc = st.session_state.descriptions.get(
+                    desc_key, dish_map.get(dish_name, "")
+                )
+                new_desc = st.text_input(
+                    f"Description for {dish_name}",
+                    value=default_desc,
+                    key=f"ti_custom_{desc_key}",
+                    label_visibility="collapsed",
+                    placeholder=f"Description for {dish_name}",
+                )
+                st.session_state.descriptions[desc_key] = new_desc
+                if (
+                    st.session_state.description_edit_scope == "Master data (backend)"
+                    and new_desc != dish_map.get(dish_name, "")
+                ):
+                    maybe_persist_master_description(section, category, dish_name, new_desc)
+
+        st.markdown("---")
+        col_a, col_b, col_c = st.columns([1, 5, 1])
+        with col_a:
+            if st.button("← Back", use_container_width=True):
+                st.session_state.step = 1
+                st.rerun()
+        with col_c:
+            if st.button("Preview & Export →", type="primary", use_container_width=True):
+                if selections_made <= 0:
+                    st.error("Please select at least one dish before continuing.")
+                else:
+                    st.session_state.menu_type = preferred_menu_type
+                    st.session_state.step = 4
                     st.rerun()
-
-    st.markdown("### Or continue directly to editing")
-    chosen_mt_pricing = menu_types.get(preferred_menu_type, {}).get("pricing", {})
-    tier_options = list(chosen_mt_pricing.keys())
-    if tier_options:
-        default_tier_index = (
-            tier_options.index(st.session_state.tier)
-            if st.session_state.tier in tier_options else 0
-        )
-        manual_tier = st.selectbox(
-            "Choose price tier for this menu type",
-            tier_options,
-            index=default_tier_index,
-        )
-        if st.button("Skip suggestions and edit menu", use_container_width=False):
-            st.session_state.selected_sample_id = None
-            st.session_state.menu_type = preferred_menu_type
-            st.session_state.tier = manual_tier
-            st.session_state.selections = {}
-            st.session_state.descriptions = {}
-            st.session_state.step = 3
-            st.rerun()
     else:
-        st.warning("No pricing tiers found for selected menu type in Excel grid.")
+        st.subheader("Step 2: Suggested Menus")
+        st.caption("Top matches from the sample-menu pool. Pick the closest one — you'll be able to tweak it on the next screen.")
 
-    st.markdown("---")
-    col_a, col_b, col_c = st.columns([1, 5, 1])
-    with col_a:
-        if st.button("← Back", use_container_width=True):
-            st.session_state.step = 1
-            st.rerun()
+        requirements = {
+            "diet": st.session_state.diet,
+            "occasion": st.session_state.occasion,
+            "meal": st.session_state.meal,
+            "num_guests": parse_guest_count(st.session_state.num_guests),
+        }
+        preferred_menu_type = st.session_state.preferred_menu_type
+        scored = suggest(requirements, top_n=None)
+        suggestions = [
+            (menu, score, reasons)
+            for menu, score, reasons in scored
+            if menu.get("menu_type") == preferred_menu_type
+        ][:3]
+
+        st.caption(f"Showing suggestions for selected menu type: **{preferred_menu_type}**")
+
+        if not suggestions:
+            st.warning(
+                "No sample menus found for the selected menu type. "
+                "You can still continue and edit selections manually."
+            )
+        else:
+            for idx, (menu, score, reasons) in enumerate(suggestions):
+                mt_pricing = menu_types.get(menu["menu_type"], {}).get("pricing", {})
+                tier_info = mt_pricing.get(menu["tier"], {})
+                price = tier_info.get("price", "?")
+                mg = tier_info.get("mg", "?")
+
+                badge = "TOP MATCH" if idx == 0 else f"OPTION {idx + 1}"
+                st.markdown(
+                    f'<div class="suggest-card">'
+                    f'<div style="color:{COLOR_ACCENT};font-weight:bold;font-size:11px;letter-spacing:1px">'
+                    f'{badge}  ·  match score {score:.0f}</div>'
+                    f'<h3 style="margin:4px 0 6px 0;color:{COLOR_PRIMARY}">{menu["name"]}</h3>'
+                    f'<div style="color:#555;margin-bottom:8px">{menu.get("description", "")}</div>'
+                    f'<div style="margin-bottom:6px">'
+                    + "".join(f'<span class="badge">{r}</span>' for r in reasons)
+                    + f'</div>'
+                    f'<div style="font-size:12px;color:#666">'
+                    f'<b>Base:</b> {menu["menu_type"]} — {menu["tier"]} tier '
+                    f'·  ₹{price}/head  ·  MG {mg} guests'
+                    f'</div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+
+                cols = st.columns([6, 2])
+                with cols[1]:
+                    if st.button(f"Use this menu", key=f"pick_{menu['id']}", type="primary", use_container_width=True):
+                        apply_sample_menu(menu)
+                        st.session_state.step = 3
+                        st.rerun()
+
+        st.markdown("### Or continue directly to editing")
+        chosen_mt_pricing = menu_types.get(preferred_menu_type, {}).get("pricing", {})
+        tier_options = list(chosen_mt_pricing.keys())
+        if tier_options:
+            default_tier_index = (
+                tier_options.index(st.session_state.tier)
+                if st.session_state.tier in tier_options else 0
+            )
+            manual_tier = st.selectbox(
+                "Choose price tier for this menu type",
+                tier_options,
+                index=default_tier_index,
+            )
+            if st.button("Skip suggestions and edit menu", use_container_width=False):
+                st.session_state.selected_sample_id = None
+                st.session_state.menu_type = preferred_menu_type
+                st.session_state.tier = manual_tier
+                st.session_state.selections = {}
+                st.session_state.descriptions = {}
+                st.session_state.step = 3
+                st.rerun()
+        else:
+            st.warning("No pricing tiers found for selected menu type in Excel grid.")
+
+        st.markdown("---")
+        col_a, col_b, col_c = st.columns([1, 5, 1])
+        with col_a:
+            if st.button("← Back", use_container_width=True):
+                st.session_state.step = 1
+                st.rerun()
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -562,6 +904,11 @@ elif st.session_state.step == 3:
                     placeholder=f"Description for {dish_name}",
                 )
                 st.session_state.descriptions[desc_key] = new_desc
+                if (
+                    st.session_state.description_edit_scope == "Master data (backend)"
+                    and new_desc != dish_map.get(dish_name, "")
+                ):
+                    maybe_persist_master_description(section, cat, dish_name, new_desc)
 
     # ── Optional Extras: categories beyond the base menu type ───────────
     # Build the union of every (section, category) across all menu types
@@ -629,6 +976,11 @@ elif st.session_state.step == 3:
                             placeholder=f"Description for {dish_name}",
                         )
                         st.session_state.descriptions[desc_key] = new_desc
+                        if (
+                            st.session_state.description_edit_scope == "Master data (backend)"
+                            and new_desc != dish_map.get(dish_name, "")
+                        ):
+                            maybe_persist_master_description(section, cat, dish_name, new_desc)
 
     # ── Add-ons / special requests ──────────────────────────────────────
     st.markdown(
