@@ -20,6 +20,20 @@ from menu_loader import load_all, get_dishes
 from pdf_generator import generate_pdf
 from suggester import suggest
 
+# Step 1 controlled options
+OCCASION_OPTIONS = [
+    "Wedding",
+    "Reception",
+    "Sangeet",
+    "Mehendi",
+    "Engagement",
+    "Birthday",
+    "Anniversary",
+    "Corporate Dinner",
+    "Conference",
+    "Festive Celebration",
+]
+
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="TCI Menu Craft",
@@ -83,7 +97,7 @@ def _init_state():
         "event_title": "",
         "event_date": None,       # datetime.date (set via date picker)
         "venue": "",
-        "occasion": "",
+        "occasion": OCCASION_OPTIONS[0],
         "diet": "veg",
         "meal": "dinner",
         "num_guests": "200",      # kept as free-text so there are no +/- steppers
@@ -95,6 +109,7 @@ def _init_state():
         "selected_sample_id": None,
         "menu_type": None,
         "tier": None,
+        "preferred_menu_type": None,
 
         # Step 3 — customisation
         "selections": {},
@@ -140,6 +155,11 @@ if st.session_state.sample_menus is None:
 grid = st.session_state.grid_data
 all_items = st.session_state.all_items
 menu_types = grid["menu_types"]
+if (
+    st.session_state.preferred_menu_type is None
+    and menu_types
+):
+    st.session_state.preferred_menu_type = next(iter(menu_types.keys()))
 
 
 # ── Step indicator ───────────────────────────────────────────────────────────
@@ -241,9 +261,14 @@ if st.session_state.step == 1:
             placeholder="e.g. Wedding Extravaganza",
         )
     with c3:
-        st.session_state.occasion = st.text_input(
-            "Occasion", value=st.session_state.occasion,
-            placeholder="e.g. wedding / sangeet / corporate dinner",
+        occasion_index = (
+            OCCASION_OPTIONS.index(st.session_state.occasion)
+            if st.session_state.occasion in OCCASION_OPTIONS else 0
+        )
+        st.session_state.occasion = st.selectbox(
+            "Occasion",
+            OCCASION_OPTIONS,
+            index=occasion_index,
         )
 
     c4, c5, c6 = st.columns(3)
@@ -309,11 +334,41 @@ if st.session_state.step == 1:
     )
 
     st.markdown("---")
+    st.markdown("**Preferred menu type (from banquet grid)**")
+    menu_type_names = list(menu_types.keys())
+    if menu_type_names:
+        mt_index = (
+            menu_type_names.index(st.session_state.preferred_menu_type)
+            if st.session_state.preferred_menu_type in menu_type_names else 0
+        )
+        st.session_state.preferred_menu_type = st.selectbox(
+            "Menu Type",
+            menu_type_names,
+            index=mt_index,
+            help="Loaded from Excel. Pricing shown below is source-of-truth from the banquet grid.",
+        )
+
+        selected_mt = menu_types[st.session_state.preferred_menu_type]
+        pricing = selected_mt.get("pricing", {})
+        if pricing:
+            price_cols = st.columns(max(1, len(pricing)))
+            for idx, (tier_name, tier_info) in enumerate(pricing.items()):
+                with price_cols[idx]:
+                    st.markdown(
+                        f'<div class="summary-card"><b>{tier_name}</b><br/>₹{tier_info.get("price", 0)}/head<br/>MG {tier_info.get("mg", 0)}</div>',
+                        unsafe_allow_html=True,
+                    )
+    else:
+        st.warning("No menu types found in Excel grid.")
+
+    st.markdown("---")
     col_a, col_b, col_c = st.columns([1, 5, 1])
     with col_c:
         if st.button("Get Suggestions →", type="primary", use_container_width=True):
             if not st.session_state.client_name.strip():
                 st.error("Please enter the client name before proceeding.")
+            elif not st.session_state.preferred_menu_type:
+                st.error("Please select a menu type before proceeding.")
             else:
                 st.session_state.step = 2
                 st.rerun()
@@ -332,10 +387,21 @@ elif st.session_state.step == 2:
         "meal": st.session_state.meal,
         "num_guests": parse_guest_count(st.session_state.num_guests),
     }
-    suggestions = suggest(requirements, top_n=3)
+    preferred_menu_type = st.session_state.preferred_menu_type
+    scored = suggest(requirements, top_n=None)
+    suggestions = [
+        (menu, score, reasons)
+        for menu, score, reasons in scored
+        if menu.get("menu_type") == preferred_menu_type
+    ][:3]
+
+    st.caption(f"Showing suggestions for selected menu type: **{preferred_menu_type}**")
 
     if not suggestions:
-        st.warning("No sample menus found. Add some to data/sample_menus.json.")
+        st.warning(
+            "No sample menus found for the selected menu type. "
+            "You can still continue and edit selections manually."
+        )
     else:
         for idx, (menu, score, reasons) in enumerate(suggestions):
             mt_pricing = menu_types.get(menu["menu_type"], {}).get("pricing", {})
@@ -367,6 +433,30 @@ elif st.session_state.step == 2:
                     apply_sample_menu(menu)
                     st.session_state.step = 3
                     st.rerun()
+
+    st.markdown("### Or continue directly to editing")
+    chosen_mt_pricing = menu_types.get(preferred_menu_type, {}).get("pricing", {})
+    tier_options = list(chosen_mt_pricing.keys())
+    if tier_options:
+        default_tier_index = (
+            tier_options.index(st.session_state.tier)
+            if st.session_state.tier in tier_options else 0
+        )
+        manual_tier = st.selectbox(
+            "Choose price tier for this menu type",
+            tier_options,
+            index=default_tier_index,
+        )
+        if st.button("Skip suggestions and edit menu", use_container_width=False):
+            st.session_state.selected_sample_id = None
+            st.session_state.menu_type = preferred_menu_type
+            st.session_state.tier = manual_tier
+            st.session_state.selections = {}
+            st.session_state.descriptions = {}
+            st.session_state.step = 3
+            st.rerun()
+    else:
+        st.warning("No pricing tiers found for selected menu type in Excel grid.")
 
     st.markdown("---")
     col_a, col_b, col_c = st.columns([1, 5, 1])
